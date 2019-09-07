@@ -2,14 +2,21 @@
 
 namespace App;
 
+use App\Traits\ScopeTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @property mixed owner
  */
 class Vote extends Model
 {
+    use ScopeTrait;
+
     protected $fillable = [
+        'owner_id',
+        'category_id',
         'subject',
         'valid_since',
         'valid_until',
@@ -43,11 +50,29 @@ class Vote extends Model
         return $this->belongsTo(User::Class , 'owner_id' , 'id');
     }
 
+    public function category(){
+        return $this->belongsTo(Category::Class);
+    }
+
     public function getOptionsAttribute(){
-        return $this->options()->get();
+        return $this->options()->enable()->get();
     }
 
     public function getOwnerAttribute(){
         return $this->owner()->first();
+    }
+
+    public function scopeValid(Builder $query):Builder{
+        return $query->where(function (Builder $q){
+              $q->whereNull('valid_since')
+                ->orWhere('valid_since', '<=' , Carbon::now());
+             })->where(function (Builder $q2){
+            $q2->whereNull('valid_until')
+                ->orWhere('valid_until', '>=' , Carbon::now());
+                });
+    }
+
+    public function scopeActive(Builder $query):Builder{
+        $query->enable()->valid();
     }
 }

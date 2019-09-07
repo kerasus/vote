@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Traits\ScopeTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @property mixed tmp_count
@@ -11,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Option extends Model
 {
+    use ScopeTrait;
+
     protected $appends = [
       'ratio',
     ];
