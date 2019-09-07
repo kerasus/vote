@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property mixed first_name
+ * @property mixed last_name
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -43,5 +46,13 @@ class User extends Authenticatable
 
     public function options(){
         return $this->hasManyThrough(Option::Class , UserVoteOption::Class);
+    }
+
+    public function ownedVotes(){
+        return $this->hasMany(User::Class);
+    }
+
+    public function getFullNameAttribute(){
+        return $this->first_name.' '.$this->last_name;
     }
 }

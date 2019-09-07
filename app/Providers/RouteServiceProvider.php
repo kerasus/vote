@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\UserVoteOption;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -26,6 +28,7 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+        $this->modelBinding();
     }
 
     /**
@@ -69,5 +72,23 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     *
+     */
+    private function modelBinding()
+    {
+        Route::bind('UserVoteOption', function ($value) {
+            $key = 'userVoteOption:'.$value;
+
+            return Cache::tags([
+                'userVoteOption',
+                $key,
+            ])->remember($key, config('cache_durations.CACHE_5'), function () use ($value) {
+                    return UserVoteOption::where('id', $value)
+                            ->first() ?? abort(404);
+                });
+        });
     }
 }

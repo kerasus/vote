@@ -16,6 +16,7 @@ class CreateVotesTable extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('owner_id')->nullable()->comment('آی دی کاربر ایجاد کننده سوال');
             $table->string('subject')->nullable()->comment('صورت سوال');
             $table->boolean('enable')->default(1)->comment('فعال یا غیرفعال بودن سوال');
             $table->timestamp('valid_since')->nullable()->comment('تاریخ شروع نظرسنجی');
@@ -23,6 +24,13 @@ class CreateVotesTable extends Migration
             $table->integer('tmp_count')->default(0)->comment('تعداد کل دفعات شرکت کردن در این سوال');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('owner_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onupdate('cascade');
+
         });
         DB::statement("ALTER TABLE `votes` comment 'جدول سوال ها'");
     }

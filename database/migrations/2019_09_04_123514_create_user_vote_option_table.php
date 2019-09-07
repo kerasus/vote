@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserVoteTable extends Migration
+class CreateUserVoteOptionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -46,7 +46,7 @@ class CreateUserVoteTable extends Migration
                 ->onupdate('cascade');
 
         });
-        DB::statement("ALTER TABLE `user_vote` comment 'جدول گزینه های انتخاب شده کاربران'");
+        DB::statement("ALTER TABLE `user_vote_option` comment 'جدول گزینه های انتخاب شده کاربران'");
     }
 
     /**
@@ -56,6 +56,6 @@ class CreateUserVoteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_vote');
+        Schema::dropIfExists('user_vote_option');
     }
 }

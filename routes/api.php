@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\IndexController;
+use App\Http\Controllers\Api\UserVoteOptionContoller;
+use App\Http\Controllers\Api\VoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v1'], function () {
+    Route::get('/' , '\\'.IndexController::class);
+    Route::resource('uservoteoption' , '\\'.UserVoteOptionContoller::class);
+    Route::resource('vote' , '\\'.VoteController::class);
 });

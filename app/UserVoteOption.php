@@ -4,9 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed vote
+ * @property mixed option
+ */
 class UserVoteOption extends Model
 {
     protected $table='user_vote_option';
+
+    protected $with = [
+       'user',
+       'vote',
+       'option'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -20,14 +30,14 @@ class UserVoteOption extends Model
     ];
 
     public function user(){
-        return $this->belongsToMany(User::Class);
+        return $this->belongsTo(User::Class);
     }
 
     public function vote(){
-        return $this->belongsToMany(Vote::Class);
+        return $this->belongsTo(Vote::Class);
     }
 
     public function option(){
-        return $this->belongsToMany(Option::Class);
+        return $this->belongsTo(Option::Class);
     }
 }

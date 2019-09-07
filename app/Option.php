@@ -4,11 +4,21 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed tmp_count
+ * @property mixed vote
+ * @property mixed vote_id
+ */
 class Option extends Model
 {
+    protected $appends = [
+      'ratio',
+    ];
+
     protected $fillable = [
         'vote_id',
         'title',
+        'tmp_count',
     ];
 
     public function vote(){
@@ -17,5 +27,14 @@ class Option extends Model
 
     public function users(){
         return $this->hasManyThrough(User::Class , UserVoteOption::Class);
+    }
+
+    public function getRatioAttribute(){
+        $vote = $this->vote()->first();
+        if(!isset($vote) || $vote->tmp_count == 0){
+            return 0;
+        }
+
+        return (int)(($this->tmp_count / $vote->tmp_count)*100);
     }
 }
