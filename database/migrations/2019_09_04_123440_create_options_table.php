@@ -19,6 +19,7 @@ class CreateOptionsTable extends Migration
             $table->unsignedBigInteger('vote_id')->comment('آی دی سوال نظرسنجی که دارای این گزینه است');
             $table->string('title')->nullable()->comment('عنوان گزینه');
             $table->boolean('enable')->default(1)->comment('فعال یا غیر فعال بودن گزینه');
+            $table->tinyInteger('order')->default(0)->comment('ترتیب گزینه');
             $table->integer('tmp_count')->default(0)->comment('تعداد دفعات امتخاب شدن این گزینه');
             $table->timestamps();
             $table->softDeletes();

@@ -18,6 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable()->comment('نام دسته');
             $table->string('display_name')->nullable()->comment('نام قابل نمایش دسته');
+            $table->tinyInteger('order')->default(0)->comment('ترتیب دسته');
             $table->boolean('enable')->default(1)->comment('فعال یا غیرفعال بودن دسته');
             $table->timestamps();
             $table->softDeletes();
