@@ -5,11 +5,11 @@ namespace App\Repositories;
 
 
 use App\Category;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 class CategoryRepo
 {
     public static function getEnableCategories():Builder{
-        return Category::enable();
+        return Category::enable()->orderBy('order');
     }
 }

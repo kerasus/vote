@@ -16,6 +16,6 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return CategoryRepo::getEnableCategories()->get()->toJson();
+        return CategoryRepo::getEnableCategories()->get();
     }
 }

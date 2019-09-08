@@ -57,6 +57,7 @@ class UserVoteOptionContoller extends Controller
         if($userVoteOption->save()){
             return response()->json([
                 'vote' => $userVoteOption->vote ,
+                'category'  =>  $userVoteOption->vote->category,
                 'message' => 'User vote stored successfully'
             ]);
         }else{

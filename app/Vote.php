@@ -4,8 +4,8 @@ namespace App;
 
 use App\Traits\ScopeTrait;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 
 /**
  * @property mixed owner
@@ -18,6 +18,7 @@ class Vote extends Model
         'owner_id',
         'category_id',
         'subject',
+        'order' ,
         'valid_since',
         'valid_until',
         'tmp_count',
@@ -55,11 +56,15 @@ class Vote extends Model
     }
 
     public function getOptionsAttribute(){
-        return $this->options()->enable()->get();
+        return $this->options()->orderBy('order')->enable()->get();
     }
 
     public function getOwnerAttribute(){
         return $this->owner()->first();
+    }
+
+    public function getMostSelectedOptionCountAttribute(){
+        return $this->options()->enable()->orderByDesc('tmp_count')->first()->tmp_count;
     }
 
     public function scopeValid(Builder $query):Builder{
@@ -73,6 +78,6 @@ class Vote extends Model
     }
 
     public function scopeActive(Builder $query):Builder{
-        $query->enable()->valid();
+        return $query->enable()->valid();
     }
 }

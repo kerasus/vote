@@ -12,9 +12,14 @@ class Category extends Model
     protected $fillable = [
         'name',
         'display_name',
+        'order',
     ];
 
     protected $appends = [
+        'sorted_votes',
+    ];
+
+    protected $hidden = [
         'votes',
     ];
 
@@ -22,7 +27,7 @@ class Category extends Model
         return $this->hasMany(Vote::Class);
     }
 
-    public function getVotesAttribute(){
-        return $this->votes()->active()->get();
+    public function getSortedVotesAttribute(){
+        return $this->votes()->active()->get()->sortByDesc('most_selected_option_count');
     }
 }

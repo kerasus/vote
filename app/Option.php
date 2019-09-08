@@ -23,6 +23,7 @@ class Option extends Model
         'vote_id',
         'title',
         'tmp_count',
+        'order',
     ];
 
     public function vote(){
