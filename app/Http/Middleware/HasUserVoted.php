@@ -23,21 +23,10 @@ class HasUserVoted
 //      $userID = $request->user()->id;
         $userID = $request->input('user_id');
         $voteID = $request->input('vote_id');
-        $hasUserVoted = $this->hasUserVoted($userID , $voteID);
-        if($hasUserVoted){
+        if(UserVoteOptionRepo::hasUserVoted($userID , $voteID)->get()->isNotEmpty()){
             return response()->json($this->setErrorResponse(myResponse::USER_HAS_VOTED_BEFORE, 'User has voted for this question before'));
         }
 
         return $next($request);
     }
-
-    private function hasUserVoted(int $userID, int $voteID):bool
-    {
-        return UserVoteOptionRepo::getRecords([
-            'user_id' => $userID ,
-            'vote_id' => $voteID ,
-        ])->get()->isNotEmpty();
-    }
-
-
 }

@@ -10,6 +10,20 @@ class UserVoteOptionRepo
 {
     protected static $model = 'App\UserVoteOption';
 
+    public static function hasUserChosenOption(int $userID , int $optionID){
+        return self::getRecords([
+            'user_id' => $userID ,
+            'option_id' => $optionID ,
+        ]);
+    }
+
+    public static function hasUserVoted(int $userID , int $voteID){
+        return self::getRecords([
+            'user_id' => $userID ,
+            'vote_id' => $voteID ,
+        ]);
+    }
+
     /**
      * @param string $table
      * @param array $columns

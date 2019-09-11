@@ -2,14 +2,17 @@
 
 namespace App;
 
+use App\Repositories\UserVoteOptionRepo;
 use App\Traits\ScopeTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property mixed tmp_count
  * @property mixed vote
  * @property mixed vote_id
+ * @property mixed id
  */
 class Option extends Model
 {
@@ -17,6 +20,7 @@ class Option extends Model
 
     protected $appends = [
       'ratio',
+        'hasUserChosen'
     ];
 
     protected $fillable = [
@@ -41,5 +45,19 @@ class Option extends Model
         }
 
         return (int)(($this->tmp_count / $vote->tmp_count)*100);
+    }
+
+    public function getHasUserChosenAttribute():?bool{
+        if(!Auth::check()){
+            return null;
+        }
+
+        /** @var User $user */
+        $user = Auth::user();
+        if(UserVoteOptionRepo::hasUserChosenOption($user->id , $this->id)->get()->isNotEmpty()){
+            return true;
+        }
+
+        return false;
     }
 }

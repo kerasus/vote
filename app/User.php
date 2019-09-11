@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 /**
  * @property mixed first_name
  * @property mixed last_name
+ * @property mixed id
  */
 class User extends Authenticatable
 {

@@ -2,13 +2,16 @@
 
 namespace App;
 
+use App\Repositories\UserVoteOptionRepo;
 use App\Traits\ScopeTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property mixed owner
+ * @property mixed id
  */
 class Vote extends Model
 {
@@ -27,6 +30,7 @@ class Vote extends Model
     protected $appends = [
         'owner' ,
         'options',
+        'hasUserVoted'
     ];
 
     /**
@@ -79,5 +83,18 @@ class Vote extends Model
 
     public function scopeActive(Builder $query):Builder{
         return $query->enable()->valid();
+    }
+
+    public function getHasUserVotedAttribute():?bool{
+        if(!Auth::check()){
+            return null;
+        }
+        /** @var User $user */
+        $user = Auth::user();
+        if(UserVoteOptionRepo::hasUserVoted($user->id , $this->id)->get()->isNotEmpty()){
+            return true;
+        }
+
+        return false;
     }
 }
