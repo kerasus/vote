@@ -13,5 +13,8 @@ return [
     |
     */
 
+    'required' => ':attribute'.' ضروری می باشد',
     'exists' => 'مقدار نامعتبری برای '.':attribute'.' انتخاب شده است',
+    'active' => ':attribute'.' فعال نمی باشد',
+    'enable' => ':attribute'.' فعال نمی باشد',
 ];
