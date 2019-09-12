@@ -9,6 +9,7 @@ use App\Traits\HTTPRequestTrait;
 use App\UserVoteOption;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class UserVoteOptionContoller extends Controller
 {
@@ -45,12 +46,12 @@ class UserVoteOptionContoller extends Controller
         $userVoteOption = new UserVoteOption($request->all());
         if($userVoteOption->save()){
             return response()->json([
+                'message' => 'User vote stored successfully',
                 'vote' => $userVoteOption->vote ,
                 'category'  =>  $userVoteOption->vote->category,
-                'message' => 'User vote stored successfully'
             ]);
         }else{
-            return response()->json($this->setErrorResponse(myResponse::COULD_NOT_INSERT_USER_VOTE, 'Could not insert user vote'));
+            return response()->json($this->setErrorResponse(myResponse::COULD_NOT_INSERT_USER_VOTE, 'Could not insert user vote') , Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

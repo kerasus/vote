@@ -6,6 +6,7 @@ use App\Classes\Response as myResponse;
 use App\Repositories\UserVoteOptionRepo;
 use App\Traits\HTTPRequestTrait;
 use Closure;
+use Illuminate\Http\Response;
 
 class HasUserVoted
 {
@@ -24,7 +25,7 @@ class HasUserVoted
         $userID = $request->input('user_id');
         $voteID = $request->input('vote_id');
         if(UserVoteOptionRepo::hasUserVoted($userID , $voteID)->get()->isNotEmpty()){
-            return response()->json($this->setErrorResponse(myResponse::USER_HAS_VOTED_BEFORE, 'User has voted for this question before'));
+            return response()->json($this->setErrorResponse(myResponse::USER_HAS_VOTED_BEFORE, 'User has voted for this question before') , Response::HTTP_CONFLICT);
         }
 
         return $next($request);
