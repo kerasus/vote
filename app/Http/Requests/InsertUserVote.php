@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Active;
+use App\Rules\Enable;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -28,9 +30,9 @@ class InsertUserVote extends FormRequest
     {
         $voteID = $request->input('vote_id');
         return [
-            'user_id'    => 'required',
-            'vote_id'    => 'required',
-            'option_id'  => ['required' , Rule::exists('options','id')->where('vote_id', $voteID)],
+            'user_id'    => ['required'],
+            'vote_id'    => ['required' , new Active],
+            'option_id'  => ['required' , new Enable , Rule::exists('options','id')->where('vote_id', $voteID)],
         ];
     }
 }

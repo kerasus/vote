@@ -6,23 +6,9 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class UserVoteOptionRepo
+class VoteRepo
 {
-    private static $model = 'App\UserVoteOption';
-
-    public static function hasUserChosenOption(int $userID , int $optionID){
-        return self::getRecords([
-            'user_id' => $userID ,
-            'option_id' => $optionID ,
-        ]);
-    }
-
-    public static function hasUserVoted(int $userID , int $voteID){
-        return self::getRecords([
-            'user_id' => $userID ,
-            'vote_id' => $voteID ,
-        ]);
-    }
+    private static $model = 'App\Vote';
 
     /**
      * @param array $filters
@@ -49,4 +35,5 @@ class UserVoteOptionRepo
             $records->whereIn($key , $filter);
         }
     }
+
 }
