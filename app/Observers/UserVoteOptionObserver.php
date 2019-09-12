@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\CountOption;
 use App\UserVoteOption;
 use Illuminate\Support\Facades\Log;
 
@@ -64,14 +65,6 @@ class UserVoteOptionObserver
 
     public function saved(UserVoteOption $userVoteOption)
     {
-        $option = $userVoteOption->option;
-        $option->update([
-            'tmp_count' => $option->tmp_count+1
-        ]);
-
-        $vote = $userVoteOption->vote;
-        $vote->update([
-            'tmp_count' => $vote->tmp_count+1
-        ]);
+        event(new CountOption($userVoteOption->option));
     }
 }
