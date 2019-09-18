@@ -17,7 +17,7 @@ use App\Http\Controllers\Api\VoteController;
 */
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::get('/' , '\\'.IndexController::class);
+    Route::get('/' , '\\'.IndexController::class)->name('api.index');
     Route::resource('uservoteoption' , '\\'.UserVoteOptionContoller::class);
     Route::resource('vote' , '\\'.VoteController::class);
     Route::resource('option' , '\\'.OptionController::class);
