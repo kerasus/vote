@@ -49,9 +49,10 @@ class UserVoteOptionContoller extends Controller
                 'vote'      => $userVoteOption->vote ,
                 'category'  =>  $userVoteOption->vote->category,
             ]);
-        }else{
-            return response()->json($this->setErrorResponse(myResponse::DATABASE_ERROR_ON_INSERTING_USER_VOTE, __('messages.database_error_insert' , ['resource'=>'رای کاربر'])) , Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
+        return response()->json($this->setErrorResponse(myResponse::DATABASE_ERROR_ON_INSERTING_USER_VOTE, __('messages.database_error_insert' , ['resource'=>'رای کاربر'])) , Response::HTTP_INTERNAL_SERVER_ERROR);
+
     }
 
     /**
