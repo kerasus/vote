@@ -28,11 +28,10 @@ class InsertUserVoteRequest extends FormRequest
      */
     public function rules(Request $request)
     {
-        $voteID = $request->input('vote_id');
         return [
             'user_id'    => ['required','min:1'],
             'vote_id'    => ['required' , new Active],
-            'option_id'  => ['required' , new Enable , Rule::exists('options','id')->where('vote_id', $voteID)],
+            'option_id'  => ['required' , new Enable , Rule::exists('options','id')->where('vote_id', $request->input('vote_id'))],
         ];
     }
 }
