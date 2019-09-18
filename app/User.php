@@ -2,9 +2,11 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 /**
  * @property mixed first_name
@@ -13,8 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use SoftDeletes;
-    use Notifiable;
+    use SoftDeletes , Notifiable , HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +30,7 @@ class User extends Authenticatable
         'mobile' ,
         'email',
         'password',
+        'national_code',
     ];
 
     /**
@@ -64,4 +66,16 @@ class User extends Authenticatable
     public function getFullNameAttribute(){
         return $this->first_name.' '.$this->last_name;
     }
+
+    public function getAppToken()
+    {
+        $tokenResult = $this->createToken(config('app.name'));
+
+        return [
+            'access_token'     => $tokenResult->accessToken,
+            'token_type'       => 'Bearer',
+            'token_expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
+        ];
+    }
+
 }

@@ -26,6 +26,13 @@ return [
     ],
     'boolean'   =>  ':attribute'.' باید مقدار بولین داشته باشد',
     'date'      =>  ':attribute'.' یک تاریخ معتبر نیست',
+    'size' => [
+        'numeric' => ':attribute'.' باید '.':size'.' باشد ',
+        'file' => ':attribute'.' باید '.':size'.' کیلوبایت باشد ',
+        'string' => ':attribute'.' باید '.':size'.' کاراکتر باشد ',
+        'array' => ':attribute'.' باید شامل '.':size'.' آیتم باشد ',
+    ],
+
 
 
 
@@ -40,6 +47,7 @@ return [
         'subject'     => 'عبارت',
         'display_name'=> 'نام',
         'name'=> 'نام',
+        'national_code'=> 'کد ملی',
         'order'       => 'ترتیب',
         'title'       => 'عنوان',
         'valid_since' => 'تاریخ شروع',
