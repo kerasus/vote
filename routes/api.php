@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\IndexController;
 use App\Http\Controllers\Api\OptionController;
 use App\Http\Controllers\Api\UserVoteOptionContoller;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Api\VoteController;
 Route::group(['prefix' => 'v1'], function () {
     Route::get('/' , '\\'.IndexController::class)->name('api.index');
     Route::resource('uservoteoption' , '\\'.UserVoteOptionContoller::class);
+    Route::resource('category' , '\\'.CategoryController::class);
     Route::resource('vote' , '\\'.VoteController::class);
     Route::resource('option' , '\\'.OptionController::class);
 });

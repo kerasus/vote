@@ -15,6 +15,7 @@ class Category extends Model
         'name',
         'display_name',
         'order',
+        'enable',
     ];
 
     protected $appends = [

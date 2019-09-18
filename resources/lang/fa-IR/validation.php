@@ -38,6 +38,8 @@ return [
         'option_id'   => 'گزینه',
         'enable'      => 'فعال/غیرفعال',
         'subject'     => 'عبارت',
+        'display_name'=> 'نام',
+        'name'=> 'نام',
         'order'       => 'ترتیب',
         'title'       => 'عنوان',
         'valid_since' => 'تاریخ شروع',
