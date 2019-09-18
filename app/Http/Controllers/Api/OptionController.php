@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Classes\Response as myResponse;
+use App\Http\Requests\InsertOptionRequest;
 use App\Option;
 use App\Traits\HTTPRequestTrait;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,10 +38,9 @@ class OptionController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(InsertOptionRequest $request)
     {
-        $option = new Option($request->all());
-        if($option->save()){
+        if(Option::create($request->all())){
             return response()->json([
                 'message' => __('messages.database_success_insert' , ['resource' => 'گزینه']) ,
             ]);

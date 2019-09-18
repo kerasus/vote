@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Classes\Response as myResponse;
+use App\Http\Requests\InsertVoteRequest;
 use App\Traits\HTTPRequestTrait;
 use App\Vote;
 use Illuminate\Http\JsonResponse;
@@ -30,9 +31,8 @@ class VoteController extends Controller
         return $vote;
     }
 
-    public function store(Request $request){
-        $vote = new Vote($request->all());
-        if($vote->save()){
+    public function store(InsertVoteRequest $request){
+        if(Vote::create($request->all())){
             return response()->json([
                 'message' => __('messages.database_success_insert' , ['resource' => 'سوال']) ,
             ]);

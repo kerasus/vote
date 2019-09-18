@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Classes\Response as myResponse;
-use App\Http\Requests\InsertUserVote;
+use App\Http\Requests\InsertUserVoteRequest;
 use App\Repositories\UserVoteOptionRepo;
 use App\Traits\HTTPRequestTrait;
 use App\UserVoteOption;
@@ -40,13 +40,13 @@ class UserVoteOptionContoller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(InsertUserVote $request)
+    public function store(InsertUserVoteRequest $request)
     {
-        $userVoteOption = new UserVoteOption($request->all());
-        if($userVoteOption->save()){
+        $userVoteOption = UserVoteOption::create($request->all());
+        if(isset($userVoteOption)){
             return response()->json([
-                'message' => __('messages.database_success_insert' , ['resource' => 'رای کاربر']),
-                'vote' => $userVoteOption->vote ,
+                'message'   => __('messages.database_success_insert' , ['resource' => 'رای کاربر']),
+                'vote'      => $userVoteOption->vote ,
                 'category'  =>  $userVoteOption->vote->category,
             ]);
         }else{

@@ -4,9 +4,9 @@ namespace App;
 
 use App\Repositories\UserVoteOptionRepo;
 use App\Traits\ScopeTrait;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class Vote extends Model
 {
+    use SoftDeletes;
     use ScopeTrait;
 
     protected $fillable = [
