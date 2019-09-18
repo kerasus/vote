@@ -22,11 +22,10 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Request $request
      * @param Category $category
      * @return Category
      */
-    public function show(Request $request , Category $category)
+    public function show(Category $category)
     {
         return $category;
     }

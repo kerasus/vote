@@ -16,17 +16,18 @@ class VoteController extends Controller
     use HTTPRequestTrait;
 
     public function index(Request $request){
-        return Vote::where('owner_id' , $request->user()->id)->get();
+        //ToDo:
+//        return Vote::where('owner_id' , $request->user()->id)->get();
+        return Vote::all();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Request $request
      * @param Vote $vote
      * @return Vote
      */
-    public function show(Request $request , Vote $vote)
+    public function show(Vote $vote)
     {
         return $vote;
     }

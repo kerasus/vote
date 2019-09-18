@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\Api\VoteController;
 use App\Repositories\UserVoteOptionRepo;
 use App\Traits\ScopeTrait;
 use Illuminate\Database\Eloquent\Builder;
@@ -32,7 +33,8 @@ class Vote extends Model
     protected $appends = [
         'owner' ,
         'options',
-        'hasUserVoted'
+        'hasUserVoted',
+        'action',
     ];
 
     /**
@@ -88,5 +90,13 @@ class Vote extends Model
         }
 
         return false;
+    }
+
+    public function getActionAttribute(){
+        return [
+            'show'   => action([VoteController::class, 'show'] , $this),
+            'update' => action([VoteController::class, 'update'] , $this),
+            'delete' => action([VoteController::class, 'destroy'] , $this),
+        ];
     }
 }

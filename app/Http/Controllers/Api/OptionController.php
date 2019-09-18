@@ -55,11 +55,11 @@ class OptionController extends Controller
      * Display the specified resource.
      *
      * @param Option $option
-     * @return Response
+     * @return Option
      */
-    public function show(Option $option)
+    public function show( Option $option)
     {
-        //
+        return $option;
     }
 
     /**

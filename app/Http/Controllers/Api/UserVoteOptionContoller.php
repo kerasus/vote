@@ -58,11 +58,10 @@ class UserVoteOptionContoller extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Request $request
      * @param UserVoteOption $userVoteOption
      * @return UserVoteOption
      */
-    public function show(Request $request, UserVoteOption $userVoteOption)
+    public function show(UserVoteOption $userVoteOption)
     {
         return $userVoteOption;
     }
