@@ -40,9 +40,11 @@ class OptionController extends Controller
      */
     public function store(InsertOptionRequest $request)
     {
-        if(Option::create($request->all())){
+        $option = Option::create($request->all());
+        if(isset($option)){
             return response()->json([
                 'message' => __('messages.database_success_insert' , ['resource' => 'گزینه']) ,
+                'option'  => $option,
             ]);
         }
 
@@ -72,6 +74,7 @@ class OptionController extends Controller
         if($option->update($request->all())){
             return response()->json([
                 'message' => __('messages.database_success_update' , ['resource' => 'سوال']) ,
+                'option'  => $option,
             ]);
         }
 

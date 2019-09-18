@@ -32,9 +32,11 @@ class CategoryController extends Controller
     }
 
     public function store(InsertCategoryRequest $request){
-        if(Category::create($request->all())){
+        $category =Category::create($request->all());
+        if(isset($category)){
             return response()->json([
-                'message' => __('messages.database_success_insert' , ['resource' => 'دسته']) ,
+                'message'   => __('messages.database_success_insert' , ['resource' => 'دسته']) ,
+                'category'  => $category,
             ]);
         }
 
@@ -44,7 +46,8 @@ class CategoryController extends Controller
     public function update(Request $request , Category $category){
         if($category->update($request->all())){
             return response()->json([
-                'message' => __('messages.database_success_update' , ['resource' => 'دسته']) ,
+                'message'  => __('messages.database_success_update' , ['resource' => 'دسته']) ,
+                'category' => $category,
             ]);
         }
 

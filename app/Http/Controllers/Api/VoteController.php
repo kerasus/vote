@@ -32,9 +32,11 @@ class VoteController extends Controller
     }
 
     public function store(InsertVoteRequest $request){
-        if(Vote::create($request->all())){
+        $vote = Vote::create($request->all());
+        if(isset($vote)){
             return response()->json([
                 'message' => __('messages.database_success_insert' , ['resource' => 'سوال']) ,
+                'vote'    => $vote,
             ]);
         }
 
@@ -45,6 +47,7 @@ class VoteController extends Controller
         if($vote->update($request->all())){
             return response()->json([
                 'message' => __('messages.database_success_update' , ['resource' => 'سوال']) ,
+                'vote'    => $vote,
             ]);
         }
 
