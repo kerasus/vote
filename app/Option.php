@@ -26,8 +26,9 @@ class Option extends Model
     protected $fillable = [
         'vote_id',
         'title',
-        'tmp_count',
+        'enable',
         'order',
+        'tmp_count',
     ];
 
     public function vote(){

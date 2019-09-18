@@ -23,7 +23,6 @@ class UserVoteOptionContoller extends Controller
         $this->middleware('hasUserVoted' , ['only' => 'store']);
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -46,12 +45,12 @@ class UserVoteOptionContoller extends Controller
         $userVoteOption = new UserVoteOption($request->all());
         if($userVoteOption->save()){
             return response()->json([
-                'message' => __('User vote stored successfully'),
+                'message' => __('messages.database_success_insert' , ['resource' => 'رای کاربر']),
                 'vote' => $userVoteOption->vote ,
                 'category'  =>  $userVoteOption->vote->category,
             ]);
         }else{
-            return response()->json($this->setErrorResponse(myResponse::COULD_NOT_INSERT_USER_VOTE, __('Could not insert user vote')) , Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json($this->setErrorResponse(myResponse::DATABASE_ERROR_ON_INSERTING_USER_VOTE, __('messages.database_error_insert' , ['resource'=>'رای کاربر'])) , Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

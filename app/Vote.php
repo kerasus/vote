@@ -21,6 +21,7 @@ class Vote extends Model
         'owner_id',
         'category_id',
         'subject',
+        'enable',
         'order' ,
         'valid_since',
         'valid_until',

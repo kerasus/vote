@@ -25,7 +25,7 @@ class HasUserVoted
         $userID = $request->input('user_id');
         $voteID = $request->input('vote_id');
         if(UserVoteOptionRepo::hasUserVoted($userID , $voteID)->get()->isNotEmpty()){
-            return response()->json($this->setErrorResponse(myResponse::USER_HAS_VOTED_BEFORE, __('User has voted for this question before')) , Response::HTTP_CONFLICT);
+            return response()->json($this->setErrorResponse(myResponse::USER_HAS_VOTED_BEFORE, __('messages.user_has_voted_before')) , Response::HTTP_CONFLICT);
         }
 
         return $next($request);
