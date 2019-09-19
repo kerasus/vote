@@ -16,14 +16,6 @@ class UserVoteOptionContoller extends Controller
     use HTTPRequestTrait;
 
     /**
-     * UserVoteOptionContoller constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('hasUserVoted' , ['only' => 'store']);
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @param Request $request

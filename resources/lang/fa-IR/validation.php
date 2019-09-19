@@ -32,8 +32,14 @@ return [
         'string' => ':attribute'.' باید '.':size'.' کاراکتر باشد ',
         'array' => ':attribute'.' باید شامل '.':size'.' آیتم باشد ',
     ],
+    'unique' => ':attribute'.' قبلا ثبت شده است',
 
 
+    'custom' => [
+        'user_id' => [
+            'unique' => 'این کاربر قبلا برای این سوال رای داده است',
+        ],
+    ],
 
 
 
