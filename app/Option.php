@@ -2,10 +2,11 @@
 
 namespace App;
 
+use App\Http\Controllers\Api\OptionController;
 use App\Repositories\UserVoteOptionRepo;
 use App\Traits\ScopeTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -16,18 +17,21 @@ use Illuminate\Support\Facades\Auth;
  */
 class Option extends Model
 {
+    use SoftDeletes;
     use ScopeTrait;
-
-    protected $appends = [
-      'ratio',
-        'hasUserChosen'
-    ];
 
     protected $fillable = [
         'vote_id',
         'title',
-        'tmp_count',
+        'enable',
         'order',
+        'tmp_count',
+    ];
+
+    protected $appends = [
+        'ratio',
+        'hasUserChosen',
+        'action',
     ];
 
     public function vote(){
@@ -59,5 +63,13 @@ class Option extends Model
         }
 
         return false;
+    }
+
+    public function getActionAttribute(){
+        return [
+            'show'   => action([OptionController::class, 'show'] , $this),
+            'update' => action([OptionController::class, 'update'] , $this),
+            'delete' => action([OptionController::class, 'destroy'] , $this),
+        ];
     }
 }

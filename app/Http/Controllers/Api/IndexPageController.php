@@ -6,7 +6,7 @@ use App\Repositories\CategoryRepo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class IndexController extends Controller
+class IndexPageController extends Controller
 {
     /**
      * Handle the incoming request.

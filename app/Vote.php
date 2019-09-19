@@ -2,11 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Api\VoteController;
 use App\Repositories\UserVoteOptionRepo;
 use App\Traits\ScopeTrait;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -15,12 +16,14 @@ use Illuminate\Support\Facades\Auth;
  */
 class Vote extends Model
 {
+    use SoftDeletes;
     use ScopeTrait;
 
     protected $fillable = [
         'owner_id',
         'category_id',
         'subject',
+        'enable',
         'order' ,
         'valid_since',
         'valid_until',
@@ -30,7 +33,8 @@ class Vote extends Model
     protected $appends = [
         'owner' ,
         'options',
-        'hasUserVoted'
+        'hasUserVoted',
+        'action',
     ];
 
     /**
@@ -86,5 +90,13 @@ class Vote extends Model
         }
 
         return false;
+    }
+
+    public function getActionAttribute(){
+        return [
+            'show'   => action([VoteController::class, 'show'] , $this),
+            'update' => action([VoteController::class, 'update'] , $this),
+            'delete' => action([VoteController::class, 'destroy'] , $this),
+        ];
     }
 }

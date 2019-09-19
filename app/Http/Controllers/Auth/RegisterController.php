@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Traits\RedirectTrait;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -22,13 +26,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+    use RedirectTrait;
 
     /**
      * Create a new controller instance.
@@ -41,6 +39,17 @@ class RegisterController extends Controller
     }
 
     /**
+     * overriding method
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -49,10 +58,12 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+//            'first_name' => ['required', 'string', 'max:255'],
+//            'last_name' => ['required', 'string', 'max:255'],
+//            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+//            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'mobile'        => ['required', 'string', 'size:11'],
+            'national_code' => ['required', 'string', 'size:10'],
         ]);
     }
 
@@ -65,10 +76,29 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'first_name'        => Arr::get($data , 'first_name'),
+            'last_name'         => Arr::get($data , 'last_name'),
+            'email'             => Arr::get($data , 'email'),
+            'mobile'            => Arr::get($data , 'mobile'),
+            'national_code'     => Arr::get($data , 'national_code'),
+            'password'          => Hash::make(Arr::get($data , 'national_code')),
         ]);
+    }
+
+    protected function registered(Request $request, User $user)
+    {
+        if ($request->expectsJson()) {
+            $token = $user->getAppToken();
+            $data  = array_merge([
+                'user' => $user,
+            ], $token);
+
+            return response()->json([
+                'status'     => 1,
+                'msg'        => __('messages.database_success_insert' , ['resource' => 'کاربر']),
+                'redirectTo' => $this->redirectTo($request),
+                'data'       => $data,
+            ], Response::HTTP_OK);
+        }
     }
 }

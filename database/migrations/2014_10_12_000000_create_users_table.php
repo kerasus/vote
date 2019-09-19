@@ -21,12 +21,18 @@ class CreateUsersTable extends Migration
             $table->string('first_name')->nullable()->comment('نام کوچک');
             $table->string('last_name')->nullable()->comment('نام خانوادگی');
             $table->string('mobile')->nullable()->comment('شماره موبایل کاربر');
+            $table->string('national_code')->nullable()->comment('کد ملی کاربر');
             $table->string('email')->nullable()->unique()->comment('آدرس ایمیل');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique([
+                'mobile',
+                'national_code',
+            ]);
         });
 
         DB::statement("ALTER TABLE `users` comment 'جدول کاربران'");

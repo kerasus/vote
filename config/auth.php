@@ -42,9 +42,9 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
-            'hash' => false,
+//            'hash' => false, this line had been added by laravel installation then was commented by Shahrokhi
         ],
     ],
 
