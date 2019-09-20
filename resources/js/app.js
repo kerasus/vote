@@ -20,6 +20,10 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('collapse-item', require('./components/collapseItem.vue').default);
+Vue.component('collapse-group', require('./components/collapseGroup.vue').default);
+Vue.component('vote-item-chioce', require('./components/voteItemChoice.vue').default);
+Vue.component('vote-item', require('./components/voteItem.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
