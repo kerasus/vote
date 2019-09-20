@@ -11,5 +11,16 @@ const mix = require('laravel-mix');
  |
  */
 
+
+// <!-- reference your copy Font Awesome here (from our CDN or by hosting yourself) -->
+// <link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet">
+//     <link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet">
+//     <link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet">
+
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+   .sass('resources/sass/app.scss', 'public/css')
+    .sourceMaps();
+
+// mix.styles(['node_modules/@fortawesome/fontawesome-free/css/all.css'], 'public/css/fontawesome.css').version();
+
+mix.sass('resources/sass/font-awesome.scss', 'public/css/fontawesome.css').version();
