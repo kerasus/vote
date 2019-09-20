@@ -1,0 +1,12 @@
+{
+    "Home"          : "خانه",
+    "Register"      : "ثبت نام",
+    "Login"         : "ورود",
+    "Logout"        : "خروج",
+    "Name"          : "نام",
+    "Mobile"        : "موبایل",
+    "National Code" : "کد ملی",
+    "E-Mail Address": "ایمیل",
+    "Remember Me"   : "مرا به خاطر بسئار",
+    "Forgot Your Password?" : "رمز عبور خود را فراموش کرده اید؟"
+}

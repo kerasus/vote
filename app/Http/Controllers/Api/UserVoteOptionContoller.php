@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Classes\Response as myResponse;
-use App\Http\Requests\InsertUserVote;
+use App\Http\Requests\InsertUserVoteRequest;
 use App\Repositories\UserVoteOptionRepo;
 use App\Traits\HTTPRequestTrait;
 use App\UserVoteOption;
@@ -14,15 +14,6 @@ use Illuminate\Http\Response;
 class UserVoteOptionContoller extends Controller
 {
     use HTTPRequestTrait;
-
-    /**
-     * UserVoteOptionContoller constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('hasUserVoted' , ['only' => 'store']);
-    }
-
 
     /**
      * Display a listing of the resource.
@@ -41,28 +32,28 @@ class UserVoteOptionContoller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(InsertUserVote $request)
+    public function store(InsertUserVoteRequest $request)
     {
-        $userVoteOption = new UserVoteOption($request->all());
-        if($userVoteOption->save()){
+        $userVoteOption = UserVoteOption::create($request->all());
+        if(isset($userVoteOption)){
             return response()->json([
-                'message' => 'User vote stored successfully',
-                'vote' => $userVoteOption->vote ,
+                'message'   => __('messages.database_success_insert' , ['resource' => 'رای کاربر']),
+                'vote'      => $userVoteOption->vote ,
                 'category'  =>  $userVoteOption->vote->category,
             ]);
-        }else{
-            return response()->json($this->setErrorResponse(myResponse::COULD_NOT_INSERT_USER_VOTE, 'Could not insert user vote') , Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
+        return response()->json($this->setErrorResponse(myResponse::DATABASE_ERROR_ON_INSERTING_USER_VOTE, __('messages.database_error_insert' , ['resource'=>'رای کاربر'])) , Response::HTTP_INTERNAL_SERVER_ERROR);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Request $request
      * @param UserVoteOption $userVoteOption
      * @return UserVoteOption
      */
-    public function show(Request $request, UserVoteOption $userVoteOption)
+    public function show(UserVoteOption $userVoteOption)
     {
         return $userVoteOption;
     }

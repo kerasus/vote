@@ -1,5 +1,7 @@
 <template>
-    <div class="v--vote-item-choice">
+    <div class="v--vote-item-choice"
+         v-bind:class="[{ selected: voteItemChoiceData.selected === true}]"
+    >
         {{ voteItemChoiceData.name }}
         <div class="v--vote-item-choice-count"><span>{{ voteItemChoiceData.count }}</span><br>رای</div>
     </div>
