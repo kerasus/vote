@@ -9,7 +9,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 mx-auto">
+            <div class="col-md-10 mx-auto">
 
                 <collapse-group v-bind:collapse-data="[]"></collapse-group>
 
