@@ -22,7 +22,7 @@
     </div>
 </div>
 <div class="v--ltr">
-    <a href="http://vote.alaatv.com" target="_blank">
+    <a href="https://vote.alaatv.com" target="_blank">
     <span class="v--hint v--ltr">
 سامانه متمرکز نظرسنجی آلاء
     </span>
