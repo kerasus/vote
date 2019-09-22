@@ -18,7 +18,7 @@
     <!-- Styles -->
     <link href="/font/Dana-Pro/farsi numral/webfonts/fontiran.css" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <link href="{{ mix('css/all.css') }}" rel="stylesheet">
+    <link href="/css/all.css" rel="stylesheet">
     <link href="{{ mix('css/fontawesome.css') }}" rel="stylesheet">
 
 
