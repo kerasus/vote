@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Observers\UserVoteOptionObserver;
 use App\UserVoteOption;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,9 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if($this->app->environment('production')) {
-            \URL::forceScheme('https');
-        }
         UserVoteOption::observe(UserVoteOptionObserver::class);
     }
 }

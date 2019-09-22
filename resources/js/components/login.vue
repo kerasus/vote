@@ -74,7 +74,7 @@
             login() {
 
                 axios({
-                        url: '/api/login',
+                        url: 'https://vote.alaatv.com/api/login',
                         data: {
                             mobile: this.username,
                             national_code: this.password
