@@ -26,7 +26,7 @@
                 const user = JSON.parse(localStorage.getItem('user'));
 
                 axios({
-                    url: '/api/v1/uservoteoption',
+                    url: 'https://vote.alaatv.com/api/v1/uservoteoption',
                     data: {
                         user_id: user.id,
                         vote_id: this.voteItemData.id,

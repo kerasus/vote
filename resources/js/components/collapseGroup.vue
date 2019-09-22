@@ -35,7 +35,7 @@
         methods: {
             refreshVotes: function() {
                 this.ajaxLoading = true;
-                axios.get('/api/v1/')
+                axios.get('https://vote.alaatv.com/api/v1/')
                     .then(response => {
                         console.log(response.data);
                         this.convertVoteFormat(response.data);
