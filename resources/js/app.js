@@ -7,6 +7,13 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import axios from 'axios';
+
+const token = localStorage.getItem('token');
+if (token) {
+    axios.defaults.headers.common['Authorization'] = token
+}
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -24,6 +31,7 @@ Vue.component('collapse-item', require('./components/collapseItem.vue').default)
 Vue.component('collapse-group', require('./components/collapseGroup.vue').default);
 Vue.component('vote-item-chioce', require('./components/voteItemChoice.vue').default);
 Vue.component('vote-item', require('./components/voteItem.vue').default);
+Vue.component('login', require('./components/login.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -4,7 +4,9 @@
     >
         <div class="v--collapse-head" v-on:click="viewCollapse">
             {{ collapseItemData.title }}
-            <span class="v--collapse-head-count">{{ collapseItemData.headCount }}</span>
+            <span class="v--collapse-head-count">
+                {{ collapseItemData.headCount }} رای
+            </span>
         </div>
         <div class="v--collapse-body">
             <vote-item
