@@ -3,7 +3,7 @@
 namespace App\Notifications;
 
 use App\Broadcasting\MedianaPatternChannel;
-use App\Classes\sms\MedianaMessage;
+use App\Classes\SMS\MedianaMessage;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;

@@ -6,7 +6,7 @@
  * Time: 21:24
  */
 
-namespace App\Classes\sms;
+namespace App\Classes\SMS;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\GuzzleException;

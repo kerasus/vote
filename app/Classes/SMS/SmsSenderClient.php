@@ -6,7 +6,7 @@
  * Time: 18:12
  */
 
-namespace App\Classes\sms;
+namespace App\Classes\SMS;
 
 interface SmsSenderClient
 {

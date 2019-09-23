@@ -2,35 +2,29 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+use App\Classes\Verification\MustVerifyMobileNumber;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class MobileVerified
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use SerializesModels;
+
+    /**
+     * The verified user.
+     *
+     * @var MustVerifyMobileNumber
+     */
+    public $user;
 
     /**
      * Create a new event instance.
      *
+     * @param  MustVerifyMobileNumber  $user
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(MustVerifyMobileNumber $user)
     {
-        //
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
+        $this->user = $user;
     }
 }

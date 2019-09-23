@@ -67,7 +67,11 @@ class User extends Authenticatable implements MustVerifyEmail , MustVerifyMobile
     }
 
     public function getFullNameAttribute(){
-        return $this->first_name.' '.$this->last_name;
+        if(!isset($this->firstName) && !isset($this->lastName)){
+            return null;
+        }
+
+        return ucfirst($this->firstName).' '.ucfirst($this->lastName);
     }
 
     public function getAppToken()
@@ -79,5 +83,10 @@ class User extends Authenticatable implements MustVerifyEmail , MustVerifyMobile
             'token_type'       => 'Bearer',
             'token_expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
         ];
+    }
+
+    public function routeNotificationForPhoneNumber()
+    {
+        return ltrim($this->mobile, '0');
     }
 }
