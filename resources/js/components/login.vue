@@ -74,7 +74,7 @@
             login() {
 
                 axios({
-                        url: 'https://vote.alaatv.com/api/login',
+                        url: '/api/login',
                         data: {
                             mobile: this.username,
                             national_code: this.password
@@ -89,6 +89,7 @@
                         localStorage.setItem('user', JSON.stringify(user));
                         // Add the following line:
                         axios.defaults.headers.common['Authorization'] = token;
+                        window.location.reload();
                         // commit('auth_success', token, user);
                         // resolve(resp);
                     })
