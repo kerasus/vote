@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 use App\Events\CountOption;
+use App\Events\MobileVerified;
 use App\Listeners\CountOptionListener;
+use App\Listeners\MobileVerifiedListener;
+use App\Listeners\SendMobileVerificationNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,7 +20,11 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         Registered::class => [
-            SendEmailVerificationNotification::class,
+//            SendEmailVerificationNotification::class,
+            SendMobileVerificationNotification::class,
+        ],
+        MobileVerified::class                  => [
+            MobileVerifiedListener::class,
         ],
         CountOption::class => [
             CountOptionListener::class

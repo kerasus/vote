@@ -2,8 +2,8 @@
 
 namespace App\Broadcasting;
 
-use App\Classes\sms\MedianaMessage;
-use App\Classes\sms\SmsSenderClient;
+use App\Classes\SMS\MedianaMessage;
+use App\Classes\SMS\SmsSenderClient;
 use Illuminate\Notifications\Notification;
 use Illuminate\Queue\SerializesModels;
 

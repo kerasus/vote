@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\MobileVerified;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Cache;
 
 class MobileVerifiedListener
 {
@@ -27,6 +28,7 @@ class MobileVerifiedListener
      */
     public function handle(MobileVerified $event)
     {
-        //
+        $event->user->sendMobileVerifiedNotification();
+        Cache::tags('User:'.$event->user->id)->flush();
     }
 }

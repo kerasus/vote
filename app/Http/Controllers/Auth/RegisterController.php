@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -25,10 +26,10 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-    
+
     use RegistersUsers;
     use RedirectTrait;
-    
+
     /**
      * Create a new controller instance.
      *
@@ -39,18 +40,18 @@ class RegisterController extends Controller
         $this->middleware('guest');
         $this->middleware('convert:mobile|password|nationalCode');
     }
-    
+
     /**
      * overriding method
      * Show the application registration form.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function showRegistrationForm()
     {
         return view('auth.login');
     }
-    
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -85,13 +86,13 @@ class RegisterController extends Controller
             ],
         ]);
     }
-    
+
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      *
-     * @return \App\User
+     * @return User
      */
     protected function create(array $data)
     {
@@ -104,21 +105,10 @@ class RegisterController extends Controller
             'password'      => Hash::make(Arr::get($data, 'password', Arr::get($data, 'national_code'))),
         ]);
     }
-    
+
     protected function registered(Request $request, User $user)
     {
-        if ($request->expectsJson()) {
-            $token = $user->getAppToken();
-            $data  = array_merge([
-                'user' => $user,
-            ], $token);
-            
-            return response()->json([
-                'status'     => 1,
-                'msg'        => __('messages.database_success_insert', ['resource' => 'کاربر']),
-                'redirectTo' => $this->redirectTo($request),
-                'data'       => $data,
-            ], Response::HTTP_OK);
-        }
+        event(new Registered($user));
+        $this->guard()->login($user);
     }
 }
