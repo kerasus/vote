@@ -181,14 +181,17 @@ h2.v--title {
     width: 0px;
     display: table-cell;
     padding: 0 5px;
+    vertical-align: top;
 }
 .v--vote-item .v--vote-item-title {
     color: rgb(13, 157, 104);
     float: right;
+    padding-right: 5px;
 }
 .v--vote-item .v--vote-item-countOfTotalVote {
     color: rgb(114, 163, 147);
     float: left;
+    padding-left: 5px;
 }
 .v--vote-item .v--vote-item-choices {
     clear: both;
@@ -238,7 +241,7 @@ h2.v--title {
 }
 
 .v--vote-item .v--vote-item-choices .v--vote-item-choice .v--vote-item-choice-count {
-
+    margin-right: 5px;
 }
 
 
