@@ -1,20 +1,18 @@
 <template>
-    <div class="v--vote-group-wrapper">
-        <div class="v--collapse-group">
-            <div class="text-center" v-show="ajaxLoading">
-                <i class="fa fa-spinner fa-pulse fa-5x fa-fw margin-bottom"></i>
-            </div>
-            
-            <collapse-item
-                    v-show="!ajaxLoading"
-                    v-on:showcollapseitem="hideItems"
-                    v-on:user-choice-updated="refreshVotes"
-                    v-for="(collapseItemData, index) in localCollapseData"
-                    v-bind:index="index"
-                    v-bind:key="localCollapseData[index].title+localCollapseData[index].id"
-                    v-bind:collapse-item-data="localCollapseData[index]"
-            ></collapse-item>
+    <div class="v--collapse-group">
+        <div class="text-center" v-show="ajaxLoading">
+            <i class="fa fa-spinner fa-pulse fa-5x fa-fw margin-bottom"></i>
         </div>
+        
+        <collapse-item
+                v-show="!ajaxLoading"
+                v-on:showcollapseitem="hideItems"
+                v-on:userchoiceupdated="refreshVotes"
+                v-for="(collapseItemData, index) in voteData"
+                v-bind:index="index"
+                v-bind:key="voteData[index].title+voteData[index].id"
+                v-bind:collapse-item-data="voteData[index]"
+        ></collapse-item>
     </div>
 </template>
 
@@ -26,19 +24,18 @@
         props: ["collapseData"],
         data: function () {
             return {
-                localCollapseData: this.collapseData,
                 ajaxLoading: false
             }
         },
         created: function() {
-            this.localCollapseData = this.collapseData;
+            this.$parent.voteData = this.collapseData;
+            this.voteData = this.$parent.voteData;
             this.refreshVotes();
         },
         methods: {
             refreshVotes: function() {
                 this.ajaxLoading = true;
-                const token = localStorage.getItem('token');
-                axios.get('/api/v1' , { headers: { 'Authorization': 'Bearer '+ token } })
+                axios.get('/api/v1')
                     .then(response => {
                         console.log(response.data);
                         this.convertVoteFormat(response.data);
@@ -50,7 +47,7 @@
             },
             convertVoteFormat: function(responseData) {
                 var responseDataLength = responseData.length;
-                this.localCollapseData = [];
+                this.voteData = [];
                 for (var i = 0; i < responseDataLength; i++) {
                     var votesLength = responseData[i].sorted_votes.length,
                         singleVoteData = [],
@@ -83,7 +80,7 @@
                         singleVoteDataCount += singleVoteChoicesDataCount;
                     }
 
-                    this.localCollapseData[i] = {
+                    this.voteData[i] = {
                         id: responseData[i].id,
                         title: responseData[i].display_name,
                         show: false,
@@ -91,11 +88,13 @@
                         voteData: singleVoteData
                     };
                 }
+
+                this.$parent.voteData = this.voteData;
             },
             hideItems: function (event) {
-                var collapseLength = this.localCollapseData.length;
+                var collapseLength = this.voteData.length;
                 for (var i = 0; i < collapseLength; i++) {
-                    this.localCollapseData[i].show = false;
+                    this.voteData[i].show = false;
                 }
             }
         },

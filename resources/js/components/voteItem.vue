@@ -13,6 +13,7 @@
                     v-bind:key="voteItemData.choices[index].name+voteItemData.choices[index].id"
                     v-bind:vote-item-data="voteItemData"
                     v-bind:vote-item-choice-data="voteItemData.choices[index]"
+                    v-on:userchoiceupdated="$emit('userchoiceupdated')"
             ></vote-item-chioce>
         </div>
     </div>

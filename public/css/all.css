@@ -10,6 +10,7 @@ body {
 }
 
 body {
+    padding-top: 50px;
     background: #f3f5f9;
 }
 
@@ -165,10 +166,11 @@ h2.v--title {
 }
 .v--collapse-group .v--collapse.show .v--collapse-body {
     display: block;
+    overflow: auto;
 }
 
 .v--vote-group-wrapper {
-    overflow: auto;
+    display: table;
 }
 
 .v--vote-group {
@@ -178,10 +180,9 @@ h2.v--title {
 }
 .v--vote-item {
     position: relative;
-    width: 0px;
-    display: table-cell;
     padding: 0 5px;
-    vertical-align: top;
+    min-width: 265px;
+    display: table-cell;
 }
 .v--vote-item .v--vote-item-title {
     color: rgb(13, 157, 104);
@@ -193,6 +194,7 @@ h2.v--title {
     float: left;
     padding-left: 5px;
 }
+
 .v--vote-item .v--vote-item-choices {
     clear: both;
 }
@@ -276,5 +278,10 @@ h2.v--title {
     .v--collapse-group .v--collapse .v--collapse-body {
         background-color: transparent;
         padding: 10px 0px;
+    }
+
+    .v--vote-item .v--vote-item-title,
+    .v--vote-item .v--vote-item-countOfTotalVote {
+        float: none;
     }
 }
