@@ -214,4 +214,11 @@ class LoginController extends Controller
     {
         return 'national_code';
     }
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string|min:10',
+        ]);
+    }
 }
