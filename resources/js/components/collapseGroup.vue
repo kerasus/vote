@@ -1,20 +1,18 @@
 <template>
-    <div class="v--vote-group-wrapper">
-        <div class="v--collapse-group">
-            <div class="text-center" v-show="ajaxLoading">
-                <i class="fa fa-spinner fa-pulse fa-5x fa-fw margin-bottom"></i>
-            </div>
-            
-            <collapse-item
-                    v-show="!ajaxLoading"
-                    v-on:showcollapseitem="hideItems"
-                    v-on:user-choice-updated="refreshVotes"
-                    v-for="(collapseItemData, index) in localCollapseData"
-                    v-bind:index="index"
-                    v-bind:key="localCollapseData[index].title+localCollapseData[index].id"
-                    v-bind:collapse-item-data="localCollapseData[index]"
-            ></collapse-item>
+    <div class="v--collapse-group">
+        <div class="text-center" v-show="ajaxLoading">
+            <i class="fa fa-spinner fa-pulse fa-5x fa-fw margin-bottom"></i>
         </div>
+        
+        <collapse-item
+                v-show="!ajaxLoading"
+                v-on:showcollapseitem="hideItems"
+                v-on:userchoiceupdated="refreshVotes"
+                v-for="(collapseItemData, index) in localCollapseData"
+                v-bind:index="index"
+                v-bind:key="localCollapseData[index].title+localCollapseData[index].id"
+                v-bind:collapse-item-data="localCollapseData[index]"
+        ></collapse-item>
     </div>
 </template>
 
@@ -37,8 +35,7 @@
         methods: {
             refreshVotes: function() {
                 this.ajaxLoading = true;
-                const token = localStorage.getItem('token');
-                axios.get('/api/v1' , { headers: { 'Authorization': 'Bearer '+ token } })
+                axios.get('/api/v1')
                     .then(response => {
                         console.log(response.data);
                         this.convertVoteFormat(response.data);
