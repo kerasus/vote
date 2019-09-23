@@ -3,18 +3,19 @@
          v-bind:class="[{ show: collapseItemData.show === true}]"
     >
         <div class="v--collapse-head" v-on:click="viewCollapse">
-            {{ collapseItemData.title }}
+            {{ localCollapseItemData.title }}
             <span class="v--collapse-head-count">
-                {{ collapseItemData.headCount }} رای
+                {{ localCollapseItemData.headCount }} رای
             </span>
         </div>
         <div class="v--collapse-body">
             <div class="v--vote-group-wrapper">
                 <vote-item
-                        v-for="(voteItemData, index) in collapseItemData.voteData"
+                        v-for="(voteItemData, index) in localCollapseItemData.voteData"
                         v-bind:index="index"
                         v-bind:key="voteItemData.name+voteItemData.id"
-                        v-bind:vote-item-data="collapseItemData.voteData[index]"
+                        v-bind:vote-item-data="localCollapseItemData.voteData[index]"
+                        v-on:userchoiceupdated="$emit('userchoiceupdated')"
                 ></vote-item>
             </div>
         </div>
@@ -27,13 +28,14 @@
         props: ["collapseItemData"],
         data: function () {
             return {
-                local: this.collapseItemData
+                localCollapseItemData: this.collapseItemData,
             }
         },
         methods: {
             viewCollapse: function (event) {
+                console.log('this.$parent.$parent.voteData: ', this.$parent.$parent.voteData);
                 this.$emit('showcollapseitem');
-                this.collapseItemData.show = true;
+                this.localCollapseItemData.show = true;
             }
         }
     }

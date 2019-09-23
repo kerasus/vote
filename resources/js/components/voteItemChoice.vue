@@ -39,15 +39,14 @@
                     method: 'POST'
                 })
                 .then(response => {
-                    alert(response.data.message);
+                    Vue.toasted.show(response.data.message);
                     this.ajaxLoading = false;
                     this.$emit('userchoiceupdated');
                 })
                 .catch(error => {
 
-                    console.log(error.response.data);
-                    alert(error.response.data.errors.user_id[0]);
-                    this.$emit('userchoiceupdated');
+                    Vue.toasted.show(error.response.data.errors.user_id[0]);
+                    // this.$emit('userchoiceupdated');
 
                     // console.error("Error response:");
                     // console.log(error);
