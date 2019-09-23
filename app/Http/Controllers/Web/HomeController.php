@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
+    public function debug(){
+        $user = \App\User::Find(1);
+        $user->sendMobileVerificationNotification();
+    }
+
     /**
      * Show the application dashboard.
      *

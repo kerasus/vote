@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes\sms;
+namespace App\Classes\SMS;
 
 class MedianaMessage
 {
