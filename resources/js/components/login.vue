@@ -6,22 +6,27 @@
             <div>
                 جهت ورود به سامانه نظرسنجی شماره موبایل و کدملی خود را وارد کنید:
             </div>
-            <div class="v--box-form">
+            <form class="v--box-form" @submit.prevent="onSubmit" @keydown="form.errors.clear([$event.target.name,$event.target.getAttribute('oname')])">
                 <div>
-                    <input type="text" class="v--input" placeholder="شماره موبایل" v-model="username">
-                    <span class="v--input-hint">مثال: 09xxxxxxxxx</span>
+                    <input type="text" class="v--input" placeholder="شماره موبایل" name="mobile" oname="username" v-model="form.mobile">
+                    <span class="v--input-hint" v-if="!form.errors.has('mobile')">مثال: 09xxxxxxxxx</span>
+                    <span class="v--input-hint" v-if="form.errors.has('mobile')" v-text="form.errors.get('mobile')"></span>
                 </div>
                 <div>
-                    <input type="password" class="v--input" placeholder="کد ملی" v-model="password">
+                    <input type="password" class="v--input" placeholder="کد ملی" name="password" oname="national_code" v-model="form.password">
+                    <span class="v--input-hint" v-if="!(form.errors.has('national_code') || form.errors.has('password'))">مثال: 0013356269</span>
+                    <span class="v--input-hint" v-if="form.errors.has('national_code')" v-text="form.errors.get('national_code')"></span>
+                    <span class="v--input-hint" v-if="form.errors.has('password')" v-text="form.errors.get('password')"></span>
+                    
                 </div>
                 <div>
-                    <button class="v--btn v--btn-success v--btn-submit" v-on:click="login">
+                    <button class="v--btn v--btn-success v--btn-submit">
                         <span class="v--text-white-shadow">
                             ورود >
                         </span>
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="v--ltr">
             <a href="https://vote.alaatv.com" target="_blank">
@@ -49,53 +54,23 @@
 <script>
     export default {
         name: "login",
-        data: function () {
+        data() {
             return {
-                username: '',
-                password: ''
+                form: new Form({
+                    mobile: '',
+                    password: '',
+                })
             }
         },
         methods: {
-            auth_request(state) {
-                state.status = 'loading'
-            },
-            auth_success(state, token, user) {
-                state.status = 'success';
-                state.token = token;
-                state.user = user
-            },
-            auth_error(state) {
-                state.status = 'error'
-            },
-            logout(state) {
-                state.status = '';
-                state.token = ''
-            },
-            login() {
-
-                axios({
-                        url: '/login',
-                        data: {
-                            mobile: this.username,
-                            national_code: this.password
-                        },
-                        method: 'POST'
-                    })
-                    .then(resp => {
-                        console.log(resp);
-                        const token = resp.data.data.access_token;
-                        const user = resp.data.data.user;
+            onSubmit(){
+                this.form.post('/login')
+                    .then(response => {
+                        let user = response.data.user;
                         localStorage.setItem('user', JSON.stringify(user));
-                        // Add the following line:
-                        axios.defaults.headers.common['Authorization'] = token;
                         window.location.reload();
-                        // commit('auth_success', token, user);
-                        // resolve(resp);
                     })
-                    .catch(err => {
-                        // commit('auth_error');
-                        console.log(err);
-                        // reject(err);
+                    .catch(error => {
                     })
             }
         }

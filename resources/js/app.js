@@ -7,8 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import axios from 'axios';
-
+window.Form = require('./util/Form').default;
 
 /**
  * The following block of code may be used to automatically register your

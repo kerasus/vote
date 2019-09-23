@@ -17,6 +17,7 @@ use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
+use App\Http\Middleware\ModifyRequestInputMiddleware;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
@@ -83,6 +84,7 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
+        'convert'                                   => ModifyRequestInputMiddleware::class,
     ];
 
     /**
