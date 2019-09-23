@@ -3,8 +3,12 @@
          v-bind:class="[{ selected: voteItemChoiceData.selected === true}]"
          v-on:click="setUserChoice"
     >
-        {{ voteItemChoiceData.name }}
-        <div class="v--vote-item-choice-count"><span>{{ voteItemChoiceData.count }}</span><br>رای</div>
+        <div class="v--vote-item-choice-title">
+            {{ voteItemChoiceData.name }}
+        </div>
+        <div class="v--vote-item-choice-count">
+            <span>{{ voteItemChoiceData.count }}</span><br>رای
+        </div>
     </div>
 </template>
 
@@ -37,13 +41,13 @@
                 .then(response => {
                     alert(response.data.message);
                     this.ajaxLoading = false;
-                    this.$emit('userChoiceUpdated');
+                    this.$emit('userchoiceupdated');
                 })
                 .catch(error => {
 
                     console.log(error.response.data);
                     alert(error.response.data.errors.user_id[0]);
-                    this.$emit('userChoiceUpdated');
+                    this.$emit('userchoiceupdated');
 
                     // console.error("Error response:");
                     // console.log(error);

@@ -169,6 +169,8 @@ h2.v--title {
 
 .v--vote-group-wrapper {
     overflow: auto;
+    display: flex;
+    flex-wrap: nowrap;
 }
 
 .v--vote-group {
@@ -178,10 +180,8 @@ h2.v--title {
 }
 .v--vote-item {
     position: relative;
-    width: 0px;
-    display: table-cell;
     padding: 0 5px;
-    vertical-align: top;
+    width: 200px !important;
 }
 .v--vote-item .v--vote-item-title {
     color: rgb(13, 157, 104);

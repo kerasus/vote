@@ -9,12 +9,14 @@
             </span>
         </div>
         <div class="v--collapse-body">
-            <vote-item
-                    v-for="(voteItemData, index) in collapseItemData.voteData"
-                    v-bind:index="index"
-                    v-bind:key="voteItemData.name+voteItemData.id"
-                    v-bind:vote-item-data="collapseItemData.voteData[index]"
-            ></vote-item>
+            <div class="v--vote-group-wrapper">
+                <vote-item
+                        v-for="(voteItemData, index) in collapseItemData.voteData"
+                        v-bind:index="index"
+                        v-bind:key="voteItemData.name+voteItemData.id"
+                        v-bind:vote-item-data="collapseItemData.voteData[index]"
+                ></vote-item>
+            </div>
         </div>
     </div>
 </template>
