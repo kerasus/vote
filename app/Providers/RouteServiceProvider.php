@@ -6,7 +6,6 @@ use App\UserVoteOption;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Laravel\Passport\Passport;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -30,11 +29,6 @@ class RouteServiceProvider extends ServiceProvider
 
         parent::boot();
         $this->modelBinding();
-        Passport::routes();
-//        Passport::tokensExpireIn(now()->addDays(15));
-//        Passport::refreshTokensExpireIn(now()->addDays(30));
-//        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
-        Passport::personalAccessClientId(1);
     }
 
     /**

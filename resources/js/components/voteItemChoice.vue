@@ -3,8 +3,12 @@
          v-bind:class="[{ selected: voteItemChoiceData.selected === true}]"
          v-on:click="setUserChoice"
     >
-        {{ voteItemChoiceData.name }}
-        <div class="v--vote-item-choice-count"><span>{{ voteItemChoiceData.count }}</span><br>رای</div>
+        <div class="v--vote-item-choice-title">
+            {{ voteItemChoiceData.name }}
+        </div>
+        <div class="v--vote-item-choice-count">
+            <span>{{ voteItemChoiceData.count }}</span><br>رای
+        </div>
     </div>
 </template>
 
@@ -21,10 +25,7 @@
         methods: {
             setUserChoice: function () {
                 this.ajaxLoading = true;
-
-                const token = localStorage.getItem('token');
                 const user = JSON.parse(localStorage.getItem('user'));
-
                 axios({
                     url: '/api/v1/uservoteoption',
                     data: {
@@ -33,21 +34,19 @@
                         option_id: this.voteItemChoiceData.id
                     },
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer '+ token
+                        'Content-Type': 'application/json'
                     },
                     method: 'POST'
                 })
                 .then(response => {
-                    alert(response.data.message);
+                    Vue.toasted.show(response.data.message);
                     this.ajaxLoading = false;
-                    this.$emit('userChoiceUpdated');
+                    this.$emit('userchoiceupdated');
                 })
                 .catch(error => {
 
-                    console.log(error.response.data);
-                    alert(error.response.data.errors.user_id[0]);
-                    this.$emit('userChoiceUpdated');
+                    Vue.toasted.show(error.response.data.errors.user_id[0]);
+                    // this.$emit('userchoiceupdated');
 
                     // console.error("Error response:");
                     // console.log(error);

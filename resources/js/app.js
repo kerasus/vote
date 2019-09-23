@@ -8,11 +8,14 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import axios from 'axios';
+import Toasted from 'vue-toasted';
 
-const token = localStorage.getItem('token');
-if (token) {
-    axios.defaults.headers.common['Authorization'] = token
-}
+var toastedOptions = {
+    theme: "outline",
+    position: "bottom-left",
+    duration : 5000
+};
+Vue.use(Toasted, toastedOptions);
 
 
 /**
@@ -41,4 +44,9 @@ Vue.component('login', require('./components/login.vue').default);
 
 const app = new Vue({
     el: '#app',
+    data: function () {
+        return {
+            voteData: []
+        }
+    },
 });
