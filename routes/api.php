@@ -19,8 +19,8 @@ use App\Http\Controllers\Api\VoteController;
 Auth::routes(['verify' => true]);
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::get('/' , '\\'.IndexPageController::class)->name('api.index');
     Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('/' , '\\'.IndexPageController::class)->name('api.index');
         Route::resource('uservoteoption' , '\\'.UserVoteOptionContoller::class);
         Route::resource('category' , '\\'.CategoryController::class);
         Route::resource('vote' , '\\'.VoteController::class);

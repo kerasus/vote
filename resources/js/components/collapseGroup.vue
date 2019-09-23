@@ -35,7 +35,8 @@
         methods: {
             refreshVotes: function() {
                 this.ajaxLoading = true;
-                axios.get('https://vote.alaatv.com/api/v1')
+                const token = localStorage.getItem('token');
+                axios.get('/api/v1' , { headers: { 'Authorization': 'Bearer '+ token } })
                     .then(response => {
                         console.log(response.data);
                         this.convertVoteFormat(response.data);
@@ -66,7 +67,7 @@
                                 id: responseSingleChoiceData.id,
                                 name: responseSingleChoiceData.title,
                                 count: responseSingleChoiceData.tmp_count,
-                                selected: (responseSingleChoiceData.hasUserChosen !== null)
+                                selected: (responseSingleChoiceData.hasUserChosen === true)
                             });
                             singleVoteChoicesDataCount += responseSingleChoiceData.tmp_count;
                         }
