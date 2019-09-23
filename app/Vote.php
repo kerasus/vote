@@ -34,6 +34,7 @@ class Vote extends Model
         'options',
         'hasUserVoted',
         'action',
+        'mostSelectedOptionCount',
     ];
 
     /**
