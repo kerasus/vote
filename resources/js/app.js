@@ -8,6 +8,12 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 window.Form = require('./util/Form').default;
+
+import vueAwesomeCountdown from 'vue-awesome-countdown'
+
+Vue.use(vueAwesomeCountdown, 'vac'); // Component name, `countdown` and `vac` by default
+
+
 import Toasted from 'vue-toasted';
 
 var toastedOptions = {
@@ -34,6 +40,7 @@ Vue.component('collapse-group', require('./components/collapseGroup.vue').defaul
 Vue.component('vote-item-chioce', require('./components/voteItemChoice.vue').default);
 Vue.component('vote-item', require('./components/voteItem.vue').default);
 Vue.component('login', require('./components/login.vue').default);
+Vue.component('mobile-verify', require('./components/mobileVerify.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
