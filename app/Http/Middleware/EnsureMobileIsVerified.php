@@ -15,13 +15,13 @@ class EnsureMobileIsVerified
      * @param \Illuminate\Http\Request $request
      * @param \Closure $next
      *
+     * @param null $redirectToRoute
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next ,$redirectToRoute = null)
     {
         if (! $request->user() || ($request->user() instanceof MustVerifyMobileNumber && ! $request->user()->hasVerifiedMobile())) {
-            return $request->expectsJson() ? abort(Response::HTTP_FORBIDDEN,
-                __('messages.mobile_is_not_verified')) : Redirect::route('verification.mobile.notice');
+            return $request->expectsJson() ? abort(Response::HTTP_FORBIDDEN, __('messages.mobile_is_not_verified')) : Redirect::route($redirectToRoute ?: 'verification.mobile.notice');
         }
 
         return $next($request);

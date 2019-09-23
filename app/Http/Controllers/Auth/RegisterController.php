@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -107,20 +108,7 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, User $user)
     {
-        if ($request->expectsJson()) {
-            $token = $user->getAppToken();
-            $data  = array_merge([
-                'user' => $user,
-            ], $token);
-
-            $user->sendMobileVerificationNotification();
-
-            return response()->json([
-                'status'     => 1,
-                'msg'        => __('messages.database_success_insert', ['resource' => 'کاربر']),
-                'redirectTo' => $this->redirectTo($request),
-                'data'       => $data,
-            ], Response::HTTP_OK);
-        }
+        event(new Registered($user));
+        $this->guard()->login($user);
     }
 }
