@@ -8,6 +8,14 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 window.Form = require('./util/Form').default;
+import Toasted from 'vue-toasted';
+
+var toastedOptions = {
+    theme: "outline",
+    position: "bottom-left",
+    duration : 5000
+};
+Vue.use(Toasted, toastedOptions);
 
 /**
  * The following block of code may be used to automatically register your
@@ -35,4 +43,9 @@ Vue.component('login', require('./components/login.vue').default);
 
 const app = new Vue({
     el: '#app',
+    data: function () {
+        return {
+            voteData: []
+        }
+    },
 });

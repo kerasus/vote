@@ -29,6 +29,7 @@ class InsertUserVoteRequest extends FormRequest
     public function rules(Request $request)
     {
         $voteID = $request->input('vote_id');
+        $request->offsetSet('user_id', $request->user()->id);
         return [
             'user_id'    => ['required','min:1' , Rule::unique('user_vote_option')->where(function ($query) use ($voteID) {
                 return $query->where('vote_id', $voteID );
