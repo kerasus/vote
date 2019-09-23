@@ -23,4 +23,5 @@ mix.js('resources/js/app.js', 'public/js')
 
 // mix.styles(['node_modules/@fortawesome/fontawesome-free/css/all.css'], 'public/css/fontawesome.css').version();
 
-mix.sass('resources/sass/font-awesome.scss', 'public/css/fontawesome.css').version();
+// mix.sass('resources/sass/font-awesome.scss', 'public/css/fontawesome.css').version();
+mix.sass('resources/sass/font-awesome.scss', 'public/css/fontawesome.css');

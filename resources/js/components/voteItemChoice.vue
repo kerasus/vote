@@ -21,10 +21,7 @@
         methods: {
             setUserChoice: function () {
                 this.ajaxLoading = true;
-
-                const token = localStorage.getItem('token');
                 const user = JSON.parse(localStorage.getItem('user'));
-
                 axios({
                     url: '/api/v1/uservoteoption',
                     data: {
@@ -33,8 +30,7 @@
                         option_id: this.voteItemChoiceData.id
                     },
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer '+ token
+                        'Content-Type': 'application/json'
                     },
                     method: 'POST'
                 })

@@ -60,21 +60,21 @@
                 state.status = 'loading'
             },
             auth_success(state, token, user) {
-                state.status = 'success'
-                state.token = token
+                state.status = 'success';
+                state.token = token;
                 state.user = user
             },
             auth_error(state) {
                 state.status = 'error'
             },
             logout(state) {
-                state.status = ''
+                state.status = '';
                 state.token = ''
             },
             login() {
 
                 axios({
-                        url: '/api/login',
+                        url: '/login',
                         data: {
                             mobile: this.username,
                             national_code: this.password
@@ -85,7 +85,6 @@
                         console.log(resp);
                         const token = resp.data.data.access_token;
                         const user = resp.data.data.user;
-                        localStorage.setItem('token', token);
                         localStorage.setItem('user', JSON.stringify(user));
                         // Add the following line:
                         axios.defaults.headers.common['Authorization'] = token;
@@ -95,7 +94,6 @@
                     })
                     .catch(err => {
                         // commit('auth_error');
-                        localStorage.removeItem('token');
                         console.log(err);
                         // reject(err);
                     })

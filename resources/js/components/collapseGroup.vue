@@ -1,18 +1,20 @@
 <template>
-    <div class="v--collapse-group">
-        <div class="text-center" v-show="ajaxLoading">
-            <i class="fa fa-spinner fa-pulse fa-5x fa-fw margin-bottom"></i>
+    <div class="v--vote-group-wrapper">
+        <div class="v--collapse-group">
+            <div class="text-center" v-show="ajaxLoading">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw margin-bottom"></i>
+            </div>
+            
+            <collapse-item
+                    v-show="!ajaxLoading"
+                    v-on:showcollapseitem="hideItems"
+                    v-on:user-choice-updated="refreshVotes"
+                    v-for="(collapseItemData, index) in localCollapseData"
+                    v-bind:index="index"
+                    v-bind:key="localCollapseData[index].title+localCollapseData[index].id"
+                    v-bind:collapse-item-data="localCollapseData[index]"
+            ></collapse-item>
         </div>
-
-        <collapse-item
-                v-show="!ajaxLoading"
-                v-on:showcollapseitem="hideItems"
-                v-on:userChoiceUpdated="refreshVotes"
-                v-for="(collapseItemData, index) in localCollapseData"
-                v-bind:index="index"
-                v-bind:key="localCollapseData[index].title+localCollapseData[index].id"
-                v-bind:collapse-item-data="localCollapseData[index]"
-        ></collapse-item>
     </div>
 </template>
 
