@@ -9,11 +9,6 @@ require('./bootstrap');
 window.Vue = require('vue');
 import axios from 'axios';
 
-const token = localStorage.getItem('token');
-if (token) {
-    axios.defaults.headers.common['Authorization'] = token
-}
-
 
 /**
  * The following block of code may be used to automatically register your

@@ -35,8 +35,7 @@
         methods: {
             refreshVotes: function() {
                 this.ajaxLoading = true;
-                const token = localStorage.getItem('token');
-                axios.get('/api/v1' , { headers: { 'Authorization': 'Bearer '+ token } })
+                axios.get('/api/v1')
                     .then(response => {
                         console.log(response.data);
                         this.convertVoteFormat(response.data);
