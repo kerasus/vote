@@ -13,9 +13,9 @@
 
 use App\Http\Controllers\Web\HomeController;
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'auth'] , function (){
-    Route::get('/home', [HomeController::class, 'index'])->name('web.home');
-    Route::get('/', [HomeController::class, 'index'])->name('web.home');
+    Route::get('/home', [HomeController::class, 'index'])->name('web.home')->middleware('verified');
+    Route::get('/', [HomeController::class, 'index'])->name('web.home')->middleware('verified');
 });

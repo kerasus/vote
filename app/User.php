@@ -2,7 +2,10 @@
 
 namespace App;
 
+use App\Classes\Verification\MustVerifyMobileNumber;
+use App\Traits\MustVerifyMobileNumberTrait;
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,9 +16,9 @@ use Laravel\Passport\HasApiTokens;
  * @property mixed last_name
  * @property mixed id
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail , MustVerifyMobileNumber
 {
-    use SoftDeletes , Notifiable , HasApiTokens;
+    use SoftDeletes , Notifiable , HasApiTokens , MustVerifyMobileNumberTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -77,5 +80,4 @@ class User extends Authenticatable
             'token_expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
         ];
     }
-
 }
