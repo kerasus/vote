@@ -181,7 +181,7 @@ h2.v--title {
 .v--vote-item {
     position: relative;
     padding: 0 5px;
-    min-width: 220px;
+    min-width: 265px;
     display: table-cell;
 }
 .v--vote-item .v--vote-item-title {
