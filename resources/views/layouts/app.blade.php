@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    
+
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
 
@@ -16,12 +16,12 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     <!-- Styles -->
-    <link href="{{ asset('font/Dana-Pro/farsi numral/webfonts/fontiran.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/all.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet">
+    <link href="/font/Dana-Pro/farsi numral/webfonts/fontiran.css" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="/css/all.css" rel="stylesheet">
+    <link href="{{ mix('css/fontawesome.css') }}" rel="stylesheet">
 
-    
+
     @yield('page-css')
 </head>
 <body>
@@ -80,12 +80,12 @@
                 </div>
             </div>
         </nav>
-    
-    
+
+
         @yield('content')
-    
+
         @yield('page-js')
-        
+
     </div>
 
 

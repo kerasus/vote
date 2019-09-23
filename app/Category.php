@@ -33,7 +33,7 @@ class Category extends Model
     }
 
     public function getSortedVotesAttribute(){
-        return $this->votes()->active()->orderBy('order')->get()->sortByDesc('most_selected_option_count');
+        return $this->votes()->active()->orderBy('order')->get()->sortByDesc('most_selected_option_count')->values();
     }
 
     public function getActionAttribute(){

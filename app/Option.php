@@ -7,7 +7,6 @@ use App\Repositories\UserVoteOptionRepo;
 use App\Traits\ScopeTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @property mixed tmp_count
@@ -52,12 +51,12 @@ class Option extends Model
     }
 
     public function getHasUserChosenAttribute():?bool{
-        if(!Auth::check()){
+        if(!auth('api')->check()){
             return null;
         }
 
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth('api')->user();
         if(UserVoteOptionRepo::hasUserChosenOption($user->id , $this->id)->get()->isNotEmpty()){
             return true;
         }

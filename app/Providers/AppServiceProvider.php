@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Observers\UserVoteOptionObserver;
 use App\UserVoteOption;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

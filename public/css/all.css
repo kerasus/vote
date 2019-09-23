@@ -178,7 +178,7 @@ h2.v--title {
 }
 .v--vote-item {
     position: relative;
-    width: 170px;
+    width: 0px;
     display: table-cell;
     padding: 0 5px;
 }

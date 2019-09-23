@@ -8,7 +8,6 @@ use App\Traits\ScopeTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @property mixed owner
@@ -35,6 +34,7 @@ class Vote extends Model
         'options',
         'hasUserVoted',
         'action',
+        'mostSelectedOptionCount',
     ];
 
     /**
@@ -80,11 +80,11 @@ class Vote extends Model
     }
 
     public function getHasUserVotedAttribute():?bool{
-        if(!Auth::check()){
+        if(!auth('api')->check()){
             return null;
         }
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth('api')->user();
         if(UserVoteOptionRepo::hasUserVoted($user->id , $this->id)->get()->isNotEmpty()){
             return true;
         }

@@ -15,5 +15,8 @@ use App\Http\Controllers\Web\HomeController;
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('web.home');
-Route::get('/', [HomeController::class, 'index'])->name('web.home');
+Route::group(['middleware' => 'auth'] , function (){
+    Route::get('/home', [HomeController::class, 'index'])->name('web.home');
+    Route::get('/', [HomeController::class, 'index'])->name('web.home');
+    Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+});
