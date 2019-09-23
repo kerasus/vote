@@ -11,12 +11,18 @@
 |
 */
 
+use App\Http\Controllers\Auth\MobileVerificationController;
 use App\Http\Controllers\Web\HomeController;
 
 Auth::routes(['verify' => true]);
+Route::group(['prefix' => 'mobile'], function () {
+    Route::get('verify', [MobileVerificationController::class, 'show'])->name('verification.mobile.notice');
+    Route::post('verify', [MobileVerificationController::class, 'verify'])->name('verification.mobile.verify');
+    Route::get('resend', [MobileVerificationController::class, 'resend'])->name('verification.mobile.resend');
+});
 
 Route::group(['middleware' => 'auth'] , function (){
-    Route::get('/home', [HomeController::class, 'index'])->name('web.home');
-    Route::get('/', [HomeController::class, 'index'])->name('web.home');
+    Route::get('/home', [HomeController::class, 'index'])->name('web.home')->middleware('mobile.verified');
+    Route::get('/', [HomeController::class, 'index'])->name('web.home')->middleware('mobile.verified');
     Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 });

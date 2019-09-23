@@ -1,5 +1,5 @@
 {
-    "Site Name"     : "سایت نظر سنجی",
+    "Site Name"     : "نظر سنجی کتاب خوب من",
     "Home"          : "خانه",
     "Register"      : "ثبت نام",
     "Login"         : "ورود",
@@ -9,5 +9,6 @@
     "National Code" : "کد ملی",
     "E-Mail Address": "ایمیل",
     "Remember Me"   : "مرا به خاطر بسئار",
-    "Forgot Your Password?" : "رمز عبور خود را فراموش کرده اید؟"
+    "Forgot Your Password?" : "رمز عبور خود را فراموش کرده اید؟",
+    "Mobile Verification" : "تایید شماره موبایل"
 }

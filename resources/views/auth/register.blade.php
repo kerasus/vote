@@ -10,11 +10,10 @@
 @endsection
 @section('content')
 
-    
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-11 col-sm-10 col-md-8 col-lg-4 mx-auto v--login-page">
-                @include('auth.partials.register')
             </div>
         </div>
         <div class="row align-items-end v--login-page-info">
