@@ -7,7 +7,7 @@
             {{ count }} رای
         </div>
         <div class="v--vote-item-choices">
-            <vote-item-choice v-for="choice in choices" :data="choice"></vote-item-choice>
+            <vote-item-choice v-for="choice in choices" :data="choice" :voted="voted"></vote-item-choice>
         </div>
     </div>
 </template>
@@ -28,6 +28,9 @@
             },
             count(){
                 return this.data.count();
+            },
+            voted(){
+                return this.data.hasUserVoted;
             }
         },
         methods: {}
