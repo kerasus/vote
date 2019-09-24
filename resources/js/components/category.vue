@@ -1,7 +1,5 @@
 <template>
-    <div class="v--collapse"
-         v-bind:class="[{ show: this.show}]"
-    >
+    <div class="v--collapse" v-bind:class="[{ show: this.show}]">
         <div class="v--collapse-head" v-on:click="viewCollapse">
             {{ title }}
             <span class="v--collapse-head-count">
@@ -10,10 +8,7 @@
         </div>
         <div class="v--collapse-body">
             <div class="v--vote-group-wrapper">
-                <vote-item
-                    v-for="vote in votes"
-                    :data = "vote"
-                ></vote-item>
+                <vote-item v-for="vote in votes" :data="vote"></vote-item>
             </div>
         </div>
     </div>
@@ -26,9 +21,7 @@
             "data"
         ],
         data() {
-            return {
-                show: true
-            }
+            return {}
         },
         computed: {
             votes() {
@@ -39,13 +32,14 @@
             },
             voteCount() {
                 return this.data.voteCount();
+            },
+            show() {
+                return this.data.isDefault;
             }
         },
         methods: {
             viewCollapse: function (event) {
-                console.log('this.$parent.$parent.voteData: ', this.$parent.$parent.voteData);
-                this.$emit('showcollapseitem');
-                this.localCollapseItemData.show = true;
+                this.data.collapse();
             }
         }
     }

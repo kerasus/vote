@@ -50,3 +50,4 @@ Vue.component('mobile-verify', require('./components/mobileVerify.vue').default)
 const app = new Vue({
     el: '#app',
 });
+

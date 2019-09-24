@@ -7,10 +7,7 @@
             {{ count }} رای
         </div>
         <div class="v--vote-item-choices">
-            <vote-item-choice
-                v-for="choice in choices"
-                :data="choice"
-            ></vote-item-choice>
+            <vote-item-choice v-for="choice in choices" :data="choice"></vote-item-choice>
         </div>
     </div>
 </template>

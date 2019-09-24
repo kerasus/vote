@@ -1,11 +1,6 @@
 <template>
     <div class="v--collapse-group">
-        <category
-            v-on:showcollapseitem="hideItems"
-            v-on:userchoiceupdated="refreshVotes"
-            v-for="c in categories"
-            :data="c">
-        </category>
+        <category v-for="c in categories" :data="c"></category>
     </div>
 </template>
 
@@ -26,24 +21,6 @@
 
         },
         methods: {
-            refreshVotes: function () {
-                this.ajaxLoading = true;
-                axios.get('/api/v1')
-                    .then(response => {
-                        console.log(response.data);
-                        this.convertVoteFormat(response.data);
-                        this.ajaxLoading = false;
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            },
-            hideItems: function (event) {
-                let collapseLength = this.voteData.length;
-                for (let i = 0; i < collapseLength; i++) {
-                    this.voteData[i].show = false;
-                }
-            }
         },
         comments: {
             category
