@@ -1,5 +1,6 @@
 <template>
     <div class="v--collapse-group">
+        <slot v-if="loading"></slot>
         <category v-for="category in categories" :data="category" :key="category.id"></category>
     </div>
 </template>
@@ -12,7 +13,8 @@
         name: "collapseGroup",
         data() {
             return {
-                categories: []
+                categories: [],
+                loading : true
             }
         },
         mounted() {
@@ -23,7 +25,10 @@
         methods: {
             getData() {
                 axios.get('/api/v1')
-                    .then(({data}) => this.categories = data.map(category => new Category(category)))
+                    .then(({data}) => {
+                        this.categories = data.map(category => new Category(category))
+                        this.loading = false;
+                    })
             },
             updateData(data) {
                 for (let cat in this.categories) {

@@ -4,7 +4,7 @@
     
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-10 mx-auto">
+            <div class="col-md-9 mx-auto">
                 <div class="row">
                     <div class="col-md-6 alert alert-info" role="alert">
                         <h4 class="alert-heading">پویش کتاب خوب من!</h4>
@@ -50,7 +50,9 @@
         <div class="row">
             <div class="col-md-10 mx-auto">
                 
-                <collapse-group></collapse-group>
+                <collapse-group>
+                    در حال دریافت اطلاعات . . . .
+                </collapse-group>
             
             </div>
         </div>
