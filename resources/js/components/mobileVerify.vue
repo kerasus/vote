@@ -54,7 +54,7 @@
                 form : new Form({
                    code: ''
                 }),
-                leftTime: 180000
+                leftTime: 60000
             }
         },
         computed: {
@@ -72,7 +72,7 @@
             submitVerificationCode() {
                 this.form.post('/mobile/verify')
                     .then(response => {
-                        this.$toasted.show(response);
+                        this.$toasted.show(response.message);
                         window.location = '/';
                     })
             },
@@ -80,7 +80,7 @@
                 this.form.reset();
                 this.form.get('/mobile/resend')
                     .then(response => {
-                        console.log(response)
+                        this.$toasted.show(response.message);
                     })
                     .catch(error => {
                     

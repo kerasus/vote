@@ -66,11 +66,12 @@
             onSubmit(){
                 this.form.post('/login')
                     .then(response => {
-                        let user = response.data.user;
-                        localStorage.setItem('user', JSON.stringify(user));
                         window.location.reload();
                     })
                     .catch(error => {
+                        if(error.status === 401){
+                            window.location='/'
+                        }
                     })
             }
         }
