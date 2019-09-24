@@ -8,6 +8,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 window.Form = require('./util/Form').default;
+require('./util/Event');
+
 
 import vueAwesomeCountdown from 'vue-awesome-countdown'
 
@@ -50,3 +52,4 @@ Vue.component('mobile-verify', require('./components/mobileVerify.vue').default)
 const app = new Vue({
     el: '#app',
 });
+

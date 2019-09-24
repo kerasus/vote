@@ -12,5 +12,6 @@ class Option {
     count(){
         return this.tmp_count;
     }
+
 }
 export default Option;

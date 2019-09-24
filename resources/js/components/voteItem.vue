@@ -1,16 +1,11 @@
 <template>
     <div class="v--vote-item">
-        <div class="v--vote-item-title">
-            {{ title }}
-        </div>
-        <div class="v--vote-item-countOfTotalVote">
+        <div class="v--vote-item-title"> {{ title }} </div>
+        <div v-if="voted" class="v--vote-item-countOfTotalVote">
             {{ count }} رای
         </div>
         <div class="v--vote-item-choices">
-            <vote-item-choice
-                v-for="choice in choices"
-                :data="choice"
-            ></vote-item-choice>
+            <vote-item-choice v-for="choice in choices" :data="choice" :key="choice.id" :voted="voted"></vote-item-choice>
         </div>
     </div>
 </template>
@@ -31,6 +26,9 @@
             },
             count(){
                 return this.data.count();
+            },
+            voted(){
+                return this.data.hasUserVoted;
             }
         },
         methods: {}

@@ -7,6 +7,7 @@ class Category {
         this.display_name = category.display_name;
         this.order = category.order;
         this.action = category.action;
+        this.isDefault = category.isDefault;
         this.setVote(category.sorted_votes);
     }
 
@@ -28,6 +29,10 @@ class Category {
 
     votes(){
         return this.sorted_votes;
+    }
+
+    collapse(){
+        this.isDefault = !this.isDefault;
     }
 }
 

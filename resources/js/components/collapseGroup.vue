@@ -1,11 +1,6 @@
 <template>
     <div class="v--collapse-group">
-        <category
-            v-on:showcollapseitem="hideItems"
-            v-on:userchoiceupdated="refreshVotes"
-            v-for="c in categories"
-            :data="c">
-        </category>
+        <category v-for="category in categories" :data="category" :key="category.id" ref="c"></category>
     </div>
 </template>
 
@@ -21,28 +16,28 @@
             }
         },
         mounted() {
-            axios.get('/api/v1')
-                .then(({data}) => this.categories = data.map(c => new Category(c)))
-
+            this.getData();
+            Event.listen('userChoiceUpdated',(data) => this.updateData(data));
         },
         methods: {
-            refreshVotes: function () {
-                this.ajaxLoading = true;
+            getData(){
                 axios.get('/api/v1')
-                    .then(response => {
-                        console.log(response.data);
-                        this.convertVoteFormat(response.data);
-                        this.ajaxLoading = false;
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
+                    .then(({data}) => this.categories = data.map(category => new Category(category)))
             },
-            hideItems: function (event) {
-                let collapseLength = this.voteData.length;
-                for (let i = 0; i < collapseLength; i++) {
-                    this.voteData[i].show = false;
+            updateData(data) {
+                let updatedCategory = data.category;
+                updatedCategory = new Category(updatedCategory);
+                updatedCategory.isDefault = 1;
+                
+                for (let cat in this.categories){
+                    if(this.categories[cat].id === updatedCategory.id){
+                        console.log("WIN!");
+                        Vue.set(this.categories,cat, updatedCategory);
+                    }
                 }
+                // let elem = this.$el;
+                //
+                // elem.scrollTop = 1500;
             }
         },
         comments: {
