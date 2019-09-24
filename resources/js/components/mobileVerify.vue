@@ -1,12 +1,19 @@
 <template>
     <div class="v--box">
         <div>
+            <p >
             کد برای شماره {{ mobile }} ارسال شد.
-            <br>
+            
+            </p>
+            <p v-if="!timerIsGoing">
+                اما پاسخی از طرف شما دریافت نشد، لطفا اگر شماره موبایل خود را اشتباه وارد فرمودید، از دکمه اصلاح شماره و یا در غیر این صورت ار دکمه ارسال مجدد کد، اقدام بفرمایید.
+            </p>
+            <p v-if="timerIsGoing">
             کد ارسال شده را وارد نمایید.
+            </p>
         </div>
         <form class="v--box-form"  @keydown="form.errors.clear([$event.target.name])">
-            <div>
+            <div v-if="timerIsGoing">
                 <input type="text" class="v--input" placeholder="کد را وارد نمایید" name="code" v-model="form.code">
                 <span class="v--input-hint" v-if="!form.errors.has('code')">مثال: 1234</span>
                 <span class="v--input-hint" v-if="form.errors.has('code')" v-text="form.errors.get('code')"></span>
@@ -20,7 +27,7 @@
                     </button>
                 </div>
                 <div class="col-md-6 text-left">
-                    <vac :end-time="endTime" @finish="onTimerStopped">
+                    <vac :left-time="leftTime" :auto-start="false" @finish="onTimerStopped" ref="vac">
                         <span slot="process" slot-scope="{ timeObj }" class="v--hint">
                             {{ `زمان باقی مانده: ${timeObj.m}:${timeObj.s}` }}
                         </span>
@@ -39,8 +46,7 @@
     export default {
         name: "mobileVerify",
         props: [
-            "mobile",
-            "timer"
+            "mobile"
         ],
         data() {
             return {
@@ -48,15 +54,16 @@
                 form : new Form({
                    code: ''
                 }),
+                leftTime: 180000
             }
         },
         computed: {
             timerIsGoing() {
                 return !this.timerStopped;
-            },
-            endTime(){
-                return new Date().getTime() + 60000;
             }
+        },
+        mounted() {
+            this.startTimer();
         },
         methods: {
             onTimerStopped() {
@@ -64,17 +71,33 @@
             },
             submitVerificationCode() {
                 this.form.post('/mobile/verify')
-                    .then(({data}) => alert(data))
+                    .then(response => {
+                        this.$toasted.show(response);
+                        window.location = '/';
+                    })
             },
             resendVerificationCode(){
                 this.form.reset();
                 this.form.get('/mobile/resend')
-                    .then(({data}) => alert(data))
-                    .catch(({error}) => alert(error))
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => {
+                    
+                    });
+                this.reset();
             },
             logout() {
                 this.form.reset();
-                window.location('/logout');
+                window.location='/logout';
+            },
+            reset(){
+                this.form.reset();
+                this.timerStopped = false;
+                this.startTimer();
+            },
+            startTimer(){
+                this.$refs.vac.startCountdown(true);
             }
             
         }

@@ -51,6 +51,10 @@ class Form {
         return this.submit('post', url);
     }
 
+    get(url) {
+        return this.submit('get', url);
+    }
+
 
     /**
      * Send a PUT request to the given URL.
@@ -97,9 +101,9 @@ class Form {
                     resolve(response.data);
                 })
                 .catch(error => {
+                    this.handleStatusCode(error.response.status);
                     this.onFail(error.response.data);
-
-                    reject(error.response.data);
+                    reject(error.response);
                 });
         });
     }
@@ -120,7 +124,23 @@ class Form {
      * @param {object} errors
      */
     onFail(errors) {
-        this.errors.record(errors);
+        try{
+            this.errors.record(errors);
+        }catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    handleStatusCode(status){
+        if (status === 429){
+            Vue.toasted.show("لطفا 5 ثانیه دیگر مجدد تلاش کنید.");
+        }
+        if ( status === 423 ){
+            Vue.toasted.show("دسترسی غیر مجاز است.");
+        }
+        if ( status === 500 ){
+            Vue.toasted.show("خطای سرور");
+        }
     }
 }
 

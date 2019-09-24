@@ -17,10 +17,10 @@ Vue.use(vueAwesomeCountdown, 'vac'); // Component name, `countdown` and `vac` by
 import Toasted from 'vue-toasted';
 
 var toastedOptions = {
-    theme: "outline",
-    position: "bottom-left",
+    theme: "bubble",
+    position: "bottom-center",
     duration : 5000
-};
+}
 Vue.use(Toasted, toastedOptions);
 
 /**
