@@ -6,17 +6,17 @@
             <div>
                 جهت ورود به سامانه نظرسنجی شماره موبایل و کدملی خود را وارد کنید:
             </div>
-            <form class="v--box-form" @submit.prevent="onSubmit" @keydown="form.errors.clear([$event.target.name,$event.target.getAttribute('oname')])">
+            <form class="v--box-form" @submit.prevent="onSubmit" @keydown="keyDownListener($event.target)">
                 <div>
                     <input type="text" class="v--input" placeholder="شماره موبایل" name="mobile" oname="username" v-model="form.mobile">
                     <span class="v--input-hint" v-if="!form.errors.has('mobile')">مثال: 09xxxxxxxxx</span>
-                    <span class="v--input-hint" v-if="form.errors.has('mobile')" v-text="form.errors.get('mobile')"></span>
+                    <span class="v--input-hint  v--danger" v-if="form.errors.has('mobile')" v-text="form.errors.get('mobile')"></span>
                 </div>
                 <div>
                     <input type="password" class="v--input" placeholder="کد ملی" name="password" oname="national_code" v-model="form.password">
                     <span class="v--input-hint" v-if="!(form.errors.has('national_code') || form.errors.has('password'))">مثال: 0013356269</span>
-                    <span class="v--input-hint" v-if="form.errors.has('national_code')" v-text="form.errors.get('national_code')"></span>
-                    <span class="v--input-hint" v-if="form.errors.has('password')" v-text="form.errors.get('password')"></span>
+                    <span class="v--input-hint  v--danger" v-if="form.errors.has('national_code')" v-text="form.errors.get('national_code')"></span>
+                    <span class="v--input-hint  v--danger" v-if="form.errors.has('password')" v-text="form.errors.get('password')"></span>
                     
                 </div>
                 <div>
@@ -63,6 +63,9 @@
             }
         },
         methods: {
+            keyDownListener(target) {
+                this.form.errors.clear([target.name,target.getAttribute('oname')])
+            },
             onSubmit(){
                 this.form.post('/login')
                     .then(response => {

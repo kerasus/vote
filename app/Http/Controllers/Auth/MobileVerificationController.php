@@ -68,10 +68,17 @@ class MobileVerificationController extends Controller
                 'message' => __('messages.mobile_is_verified'),
             ]);
         }
-        else {
-            $request->expectsJson() ? abort(Response::HTTP_FORBIDDEN,
-                __('messages.code_is_wrong')) : Redirect::route('verification.mobile.notice');
+    
+        if($request->expectsJson() ){
+            return response()->json([
+                    'errors' => [
+                        'code' => [
+                            __('messages.code_is_wrong')
+                        ]
+                    ]
+                ],Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+        Redirect::route('verification.mobile.notice');
     }
 
     /**

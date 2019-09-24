@@ -12,11 +12,11 @@
             کد ارسال شده را وارد نمایید.
             </p>
         </div>
-        <form class="v--box-form"  @keydown="form.errors.clear([$event.target.name])">
+        <form class="v--box-form"  @keydown="keyDownListener($event.target)">
             <div v-if="timerIsGoing">
-                <input type="text" class="v--input" placeholder="کد را وارد نمایید" name="code" v-model="form.code">
-                <span class="v--input-hint" v-if="!form.errors.has('code')">مثال: 1234</span>
-                <span class="v--input-hint" v-if="form.errors.has('code')" v-text="form.errors.get('code')"></span>
+                <input type="text" class="v--input"  placeholder="کد را وارد نمایید" name="code" v-model.trim="form.code">
+                <span class="v--input-hint" v-if="!form.errors.has('code')">مثال: 12345</span>
+                <span class="v--input-hint v--danger" v-if="form.errors.has('code')" v-text="form.errors.get('code')"></span>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -64,8 +64,12 @@
         },
         mounted() {
             this.startTimer();
+            
         },
         methods: {
+            keyDownListener(target) {
+                this.form.errors.clear([target.name]);
+            },
             onTimerStopped() {
                 this.timerStopped = true;
             },
@@ -75,6 +79,9 @@
                         this.$toasted.show(response.message);
                         window.location = '/';
                     })
+                    .catch(error => {
+                        this.form.code = '';
+                    });
             },
             resendVerificationCode(){
                 this.form.reset();
