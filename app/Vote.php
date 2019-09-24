@@ -76,7 +76,7 @@ class Vote extends Model
     }
 
     public function getOptionsAttribute(){
-        return $this->options()->orderBy('order')->enable()->get();
+        return $this->options()->orderByDesc('tmp_count')->orderBy('order')->enable()->get();
     }
 
     public function getOwnerAttribute(){
