@@ -10,5 +10,6 @@
     "E-Mail Address": "ایمیل",
     "Remember Me"   : "مرا به خاطر بسئار",
     "Forgot Your Password?" : "رمز عبور خود را فراموش کرده اید؟",
-    "Mobile Verification" : "تایید شماره موبایل"
+    "Mobile Verification" : "تایید شماره موبایل",
+    "The given data was invalid." : "داده ورودی نامعتبر می باشد"
 }

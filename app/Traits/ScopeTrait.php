@@ -16,10 +16,10 @@ trait ScopeTrait
     public function scopeValid(Builder $query):Builder{
         return $query->where(function (Builder $q){
             $q->whereNull('valid_since')
-                ->orWhere('valid_since', '<=' , Carbon::now());
+                ->orWhere('valid_since', '<=' , Carbon::now('Asia/Tehran'));
         })->where(function (Builder $q2){
             $q2->whereNull('valid_until')
-                ->orWhere('valid_until', '>=' , Carbon::now());
+                ->orWhere('valid_until', '>=' , Carbon::now('Asia/Tehran'));
         });
     }
 }

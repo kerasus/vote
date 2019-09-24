@@ -5,12 +5,13 @@ namespace App\Traits;
 
 trait HTTPRequestTrait
 {
-    protected function setErrorResponse(int $responseCode, string $responseText): array
+    protected function setErrorResponse(int $responseCode, string $responseText , string $infoIndex='extraInfo', array $extraInfo = []): array
     {
         return [
             'message' => $responseText,
-            'error' => [
+            'errors' => [
                 'code' => $responseCode,
+                $infoIndex => $extraInfo,
             ]
         ];
     }

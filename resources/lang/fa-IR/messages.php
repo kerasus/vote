@@ -13,5 +13,9 @@ return [
     'mobile_is_not_verified'    => 'شماره موبایل شما تایید نشده است',
     'mobile_is_verified' => 'شماره موبایل شما تایید شد',
     'code_is_wrong' => 'کد وارد شده اشتباه می باشد' ,
-    'code_is_sent' => 'کد ارسال شد'
+    'code_is_sent' => 'کد ارسال شد',
+    'vote_not_exists' => 'سوال وجود ندارد',
+    'vote_not_active' => 'سوال فعال نمی باشد',
+    'option_not_exists' => 'گزینه وجود ندارد',
+    'option_not_active' => 'گزینه فعال نمی باشد'
 ];
