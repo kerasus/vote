@@ -37,6 +37,18 @@ class Vote extends Model
         'mostSelectedOptionCount',
     ];
 
+    protected $hidden = [
+        'owner_id',
+        'category_id',
+        'enable',
+        'valid_since',
+        'valid_until',
+        'deleted_at',
+        'created_at',
+        'updated_at',
+        'owner'
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
