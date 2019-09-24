@@ -11,3 +11,4 @@ window.Event = new class {
         this.Vue.$on(event,callback);
     }
 };
+

@@ -16,11 +16,14 @@
             }
         },
         mounted() {
-            axios.get('/api/v1')
-                .then(({data}) => this.categories = data.map(category => new Category(category)))
-
+            this.getData();
+            Event.listen('userChoiceUpdated',() => this.getData());
         },
         methods: {
+            getData(){
+                axios.get('/api/v1')
+                    .then(({data}) => this.categories = data.map(category => new Category(category)))
+            }
         },
         comments: {
             category
