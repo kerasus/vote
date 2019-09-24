@@ -1,22 +1,23 @@
 <template>
     <div class="v--vote-item-choice" :class="[{ selected: selected}]" @click.prevent="staging = true">
-        <div class="v--vote-item-choice-title" v-if="!staging"> {{ data.title }}</div>
-        <div class="v--vote-item-choice-count" v-if="!staging" v-show="voted">
-            <span>{{ count }}</span><br>رای
-        </div>
-        <div v-if="staging">
-            <span class="font-weight-bold"> مطمئن هستی ؟</span>
-            <div class="ui-group-buttons">
-                <a href="#" class="btn btn-lg btn-danger" role="button" @click.stop="staging=false">
-                    <span class="v--vote-no"></span> خیر
-                </a>
-                <div class="or"></div>
-                <a href="#" class="btn  btn-lg btn-success" role="button" @click.stop="confirmed">
-                    <span class="v--vote-yes"></span> بله
-                </a>
-            
+
+            <div class="v--vote-item-choice-title" v-if="!staging"> {{ data.title }}</div>
+            <div class="v--vote-item-choice-count" v-if="!staging" v-show="voted">
+                <span>{{ count }}</span><br>رای
             </div>
-        </div>
+            <div v-if="staging">
+                <span class="font-weight-bold"> مطمئن هستی ؟</span>
+                <div class="ui-group-buttons">
+                    <a href="#" class="btn btn-lg btn-danger" role="button" @click.stop="staging=false">
+                        <span class="v--vote-no"></span> خیر
+                    </a>
+                    <div class="or"></div>
+                    <a href="#" class="btn  btn-lg btn-success" role="button" @click.stop="confirmed">
+                        <span class="v--vote-yes"></span> بله
+                    </a>
+                
+                </div>
+            </div>
     </div>
 </template>
 
@@ -48,10 +49,33 @@
             setUserChoice() {
                 axios['post']('/api/v1/uservoteoption', {option_id: this.data.id})
                     .then(({data}) => {
-                        Vue.toasted.show(data.message);
-                        Event.fire('userChoiceUpdated');
+                        let option = {
+                            theme: "toasted-primary",
+                            position: "bottom-center",
+                            duration: 5000
+                        };
+                        Vue.toasted.show(data.message, option);
+                        Event.fire('userChoiceUpdated', data);
                     })
                     .catch(error => {
+                        try {
+                            let status = error.response.status;
+                            if (status === 422) {
+                                Vue.toasted.show(error.response.data.errors.user_id[0]);
+                            }
+                            if (status === 429) {
+                                Vue.toasted.show("لطفا 5 ثانیه دیگر مجدد تلاش کنید.");
+                            }
+                            if (status === 403) {
+                                Vue.toasted.show("دسترسی غیر مجاز است.");
+                            }
+                            if (status === 500) {
+                                Vue.toasted.show("خطای سرور");
+                            }
+
+                        } catch (e) {
+
+                        }
                         console.log(error.response.data.errors);
                     });
             }
@@ -173,5 +197,12 @@
         border-top-right-radius: .25em;
         border-bottom-right-radius: .25em;
         padding-left: 15px
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
     }
 </style>

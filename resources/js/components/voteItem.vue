@@ -1,7 +1,7 @@
 <template>
     <div class="v--vote-item">
         <div class="v--vote-item-title"> {{ title }} </div>
-        <div class="v--vote-item-countOfTotalVote">
+        <div v-if="voted" class="v--vote-item-countOfTotalVote">
             {{ count }} رای
         </div>
         <div class="v--vote-item-choices">
