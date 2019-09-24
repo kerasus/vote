@@ -33,6 +33,14 @@ class Option extends Model
         'action',
     ];
 
+    protected $hidden = [
+        'vote_id',
+        'enable',
+        'deleted_at',
+        'created_at',
+        'updated_at'
+    ];
+
     public function vote(){
         return $this->belongsTo(Vote::Class);
     }
