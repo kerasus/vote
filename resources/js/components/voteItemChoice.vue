@@ -1,25 +1,33 @@
 <template>
     <div class="v--vote-item-choice"
-         v-bind:class="[{ selected: voteItemChoiceData.selected === true}]"
+         v-bind:class="[{ selected: selected}]"
          v-on:click="setUserChoice"
     >
         <div class="v--vote-item-choice-title">
-            {{ voteItemChoiceData.name }}
+            {{ data.title }}
         </div>
         <div class="v--vote-item-choice-count">
-            <span>{{ voteItemChoiceData.count }}</span><br>رای
+            <span>{{ count }}</span><br>رای
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "voteItemChoice.vue",
-        props: ["voteItemChoiceData", "voteItemData"],
-        data: function () {
+        name: "voteItemChoice",
+        props: ["data"],
+        data() {
             return {
                 local: this.voteItemChoiceData,
                 ajaxLoading: false
+            }
+        },
+        computed:{
+            count(){
+                return this.data.count();
+            },
+            selected() {
+                return this.data.hasUserChosen;
             }
         },
         methods: {
@@ -44,16 +52,7 @@
                     this.$emit('userchoiceupdated');
                 })
                 .catch(error => {
-
                     Vue.toasted.show(error.response.data.errors.user_id[0]);
-                    // this.$emit('userchoiceupdated');
-
-                    // console.error("Error response:");
-                    // console.log(error);
-                    // console.error(error.response.data);    // ***
-                    // console.error(error.response.status);  // ***
-                    // console.error(error.response.headers); // ***
-
                 });
             }
         }

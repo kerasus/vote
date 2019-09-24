@@ -8,11 +8,17 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 window.Form = require('./util/Form').default;
+
+import vueAwesomeCountdown from 'vue-awesome-countdown'
+
+Vue.use(vueAwesomeCountdown, 'vac'); // Component name, `countdown` and `vac` by default
+
+
 import Toasted from 'vue-toasted';
 
 var toastedOptions = {
-    theme: "outline",
-    position: "bottom-left",
+    theme: "bubble",
+    position: "bottom-center",
     duration : 5000
 };
 Vue.use(Toasted, toastedOptions);
@@ -28,12 +34,12 @@ Vue.use(Toasted, toastedOptions);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('collapse-item', require('./components/collapseItem.vue').default);
+Vue.component('category', require('./components/category.vue').default);
 Vue.component('collapse-group', require('./components/collapseGroup.vue').default);
-Vue.component('vote-item-chioce', require('./components/voteItemChoice.vue').default);
+Vue.component('vote-item-choice', require('./components/voteItemChoice.vue').default);
 Vue.component('vote-item', require('./components/voteItem.vue').default);
 Vue.component('login', require('./components/login.vue').default);
+Vue.component('mobile-verify', require('./components/mobileVerify.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -43,9 +49,4 @@ Vue.component('login', require('./components/login.vue').default);
 
 const app = new Vue({
     el: '#app',
-    data: function () {
-        return {
-            voteData: []
-        }
-    },
 });
