@@ -40,6 +40,7 @@
         methods: {
             viewCollapse: function (event) {
                 this.data.collapse();
+                Event.fire('categoryCollapsed', this.data);
             }
         }
     }

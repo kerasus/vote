@@ -3,8 +3,14 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Session\TokenMismatchException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -47,12 +53,38 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof TokenMismatchException) {
+            Auth::logout();
+            Session::flush();
+        
+            return redirect()->back();
+        }
+        
         if($exception instanceof ThrottleRequestsException){
             return response()->json([
                 'message' => 'Too Many Attempts.',
                 'errors' => [
                 ],
             ], 429);
+        }
+    
+        if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
+            return response()->json([
+                'error' => 'Resource not found',
+            ], 404);
+        }
+        
+        if ($exception instanceof NotFoundHttpException && $request->wantsJson()) {
+            return response()->json([
+                'error' => 'not found',
+            ], 404);
+        }
+        
+        if ($exception instanceof HttpException && $request->wantsJson()) {
+            return response()->json([
+                'error' => $exception->getMessage(),
+            ], $exception->getStatusCode());
+        
         }
         return parent::render($request, $exception);
     }

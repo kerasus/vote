@@ -1,6 +1,6 @@
 <template>
     <div class="v--collapse-group">
-        <category v-for="category in categories" :data="category" :key="category.id" ref="c"></category>
+        <category v-for="category in categories" :data="category" :key="category.id"></category>
     </div>
 </template>
 
@@ -17,27 +17,35 @@
         },
         mounted() {
             this.getData();
-            Event.listen('userChoiceUpdated',(data) => this.updateData(data));
+            Event.listen('userChoiceUpdated', (data) => this.updateData(data));
+            Event.listen('categoryCollapsed', (collapsedCategory) => this.collapseOtherCategory(collapsedCategory))
         },
         methods: {
-            getData(){
+            getData() {
                 axios.get('/api/v1')
                     .then(({data}) => this.categories = data.map(category => new Category(category)))
             },
             updateData(data) {
-                let updatedCategory = data.category;
-                updatedCategory = new Category(updatedCategory);
-                updatedCategory.isDefault = 1;
-                
-                for (let cat in this.categories){
-                    if(this.categories[cat].id === updatedCategory.id){
-                        console.log("WIN!");
-                        Vue.set(this.categories,cat, updatedCategory);
+                for (let cat in this.categories) {
+                    if (this.categories[cat].id === data.category.id) {
+                        
+                        let temp = new Category(data.category);
+                        temp.isDefault = 1;
+                        Vue.set(this.categories, cat, temp);
+                        
                     }
                 }
-                // let elem = this.$el;
-                //
-                // elem.scrollTop = 1500;
+            },
+            collapseOtherCategory(collapsedCategory) {
+                for (let cat in this.categories) {
+                    let temp = this.categories[cat];
+                    if (temp.id !== collapsedCategory.id ) {
+                       if(temp.isDefault) {
+                           temp.isDefault = 0;
+                           Vue.set(this.categories, cat, temp);
+                       }
+                    }
+                }
             }
         },
         comments: {

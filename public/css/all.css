@@ -113,6 +113,10 @@ h2.v--title {
     color: rgb(148, 152, 161);
 }
 
+.v--input-hint.v--danger {
+    color: rgb(255, 0, 136);
+}
+
 .v--margin-right-5 {
     margin-right: 5px;
 }
@@ -289,3 +293,5 @@ h2.v--title {
         float: none;
     }*/
 }
+
+
