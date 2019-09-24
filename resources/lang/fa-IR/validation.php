@@ -1,7 +1,7 @@
 <?php
 
 return [
-    
+
     /*
     |--------------------------------------------------------------------------
     | Validation Language Lines
@@ -12,7 +12,7 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-    
+
     'required' => ':attribute'.' ضروری می باشد',
     'exists'   => 'مقدار انتخاب شده برای '.':attribute'.' وجود ندارد',
     'active'   => ':attribute'.' فعال نمی باشد',
@@ -34,18 +34,18 @@ return [
     ],
     'unique'   => ':attribute'.' قبلا ثبت شده است',
     'digits'   => ':attribute'.' باید :digits رقم باشد.',
-    
-    
+
+
     'custom' => [
         'user_id'  => [
-            'unique' => 'این کاربر قبلا برای این سوال رای داده است',
+            'unique' => 'شما قبلا برای این سوال رأی داده است',
         ],
         'password' => [
             'min' => 'کد ملی باید :min رقم باشد.',
         ],
     ],
-    
-    
+
+
     'attributes' => [
         'owner_id'      => 'صاحب سوال',
         'user_id'       => 'کاربر',
