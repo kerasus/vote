@@ -34,7 +34,6 @@ class UserVoteOptionContoller extends Controller
      */
     public function store(InsertUserVoteRequest $request)
     {
-        $request->offsetSet('user_id', $request->user()->id);
         $userVoteOption = UserVoteOption::create($request->all());
         if(isset($userVoteOption)){
             return response()->json([
