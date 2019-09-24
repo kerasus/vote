@@ -26,6 +26,10 @@ class Category extends Model
 
     protected $hidden = [
         'votes',
+        'deleted_at',
+        'enable',
+        'created_at',
+        'updated_at',
     ];
 
     public function votes(){
