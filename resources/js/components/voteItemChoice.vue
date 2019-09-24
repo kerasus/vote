@@ -1,8 +1,6 @@
 <template>
     <div class="v--vote-item-choice" :class="[{ selected: selected}]" @click="setUserChoice">
-        <div class="v--vote-item-choice-title">
-            {{ data.title }}
-        </div>
+        <div class="v--vote-item-choice-title"> {{ data.title }} </div>
         <div class="v--vote-item-choice-count" v-show="voted">
             <span>{{ count }}</span><br>رای
         </div>
@@ -29,24 +27,13 @@
         },
         methods: {
             setUserChoice: function () {
-                axios({
-                    url: '/api/v1/uservoteoption',
-                    data: {
-                        vote_id: this.voteItemData.id,
-                        option_id: this.voteItemChoiceData.id
-                    },
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    method: 'POST'
-                })
-                    .then(response => {
-                        Vue.toasted.show(response.data.message);
-                        this.ajaxLoading = false;
-                        this.$emit('userchoiceupdated');
+                axios['post']('/api/v1/uservoteoption',{ option_id: this.data.id })
+                    .then(({data}) => {
+                       Vue.toasted.show(data.message);
+                       Event.fire('userChoiceUpdated');
                     })
                     .catch(error => {
-                        Vue.toasted.show(error.response.data.errors.user_id[0]);
+                        console.log(error.response.data.errors);
                     });
             }
         }

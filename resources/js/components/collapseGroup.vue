@@ -1,6 +1,6 @@
 <template>
     <div class="v--collapse-group">
-        <category v-for="c in categories" :data="c"></category>
+        <category v-for="category in categories" :data="category" :key="category.id"></category>
     </div>
 </template>
 
@@ -17,7 +17,7 @@
         },
         mounted() {
             axios.get('/api/v1')
-                .then(({data}) => this.categories = data.map(c => new Category(c)))
+                .then(({data}) => this.categories = data.map(category => new Category(category)))
 
         },
         methods: {
