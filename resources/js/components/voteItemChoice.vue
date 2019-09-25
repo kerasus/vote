@@ -1,5 +1,5 @@
 <template>
-    <div class="v--vote-item-choice" :class="[{ selected: selected}]" @click.prevent="staging = true">
+    <div class="v--vote-item-choice" :class="[{ selected: selected}]" @click.prevent.stop="staging = true">
 
             <div class="v--vote-item-choice-title" v-if="!staging"> {{ data.title }}</div>
             <div class="v--vote-item-choice-count" v-if="!staging" v-show="voted">
@@ -8,11 +8,11 @@
             <div v-if="staging">
                 <span class="font-weight-bold"> مطمئن هستی ؟</span>
                 <div class="ui-group-buttons">
-                    <a href="#" class="btn btn-lg btn-danger" role="button" @click.stop="staging=false">
+                    <a href="#" class="btn btn-lg btn-danger" role="button" @click.prevent.stop="staging=false">
                         <span class="v--vote-no"></span> خیر
                     </a>
                     <div class="or"></div>
-                    <a href="#" class="btn  btn-lg btn-success" role="button" @click.stop="confirmed">
+                    <a href="#" class="btn  btn-lg btn-success" role="button" @click.prevent.stop="confirmed">
                         <span class="v--vote-yes"></span> بله
                     </a>
                 
