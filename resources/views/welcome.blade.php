@@ -51,7 +51,11 @@
             <div class="col-md-10 mx-auto">
                 
                 <collapse-group>
-                    در حال دریافت اطلاعات . . . .
+                    <div class="text-center">
+                        <i class="fa fa-spinner fa-pulse fa-5x fa-fw margin-bottom"></i>
+                        <br>
+                        در حال دریافت اطلاعات . . . .
+                    </div>
                 </collapse-group>
             
             </div>
