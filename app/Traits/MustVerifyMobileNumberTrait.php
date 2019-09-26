@@ -89,9 +89,9 @@ trait MustVerifyMobileNumberTrait
     /**
      * get user's verification code
      *
-     * @return string
+     * @return string|null
      */
-    public function getMobileVerificationCode(): string
+    public function getMobileVerificationCode(): ?string
     {
         return $this->mobile_verified_code;
     }
