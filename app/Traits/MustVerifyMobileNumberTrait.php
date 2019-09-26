@@ -8,9 +8,11 @@
 
 namespace App\Traits;
 
+use App\Events\MobileVerificationCodeGenerated;
 use App\Notifications\MobileVerified;
 use App\Notifications\VerifyMobile;
-use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 trait MustVerifyMobileNumberTrait
 {
@@ -21,7 +23,7 @@ trait MustVerifyMobileNumberTrait
      */
     public function hasVerifiedMobile()
     {
-        return $this->mobile_verified_at !== null;
+        return ! is_null($this->mobile_verified_at);
     }
 
     /**
@@ -44,10 +46,10 @@ trait MustVerifyMobileNumberTrait
     public function sendMobileVerificationNotification()
     {
         if ($this->setMobileVerificationCode()) {
-            $this->notify(new VerifyMobile());
+//            $this->notify(new VerifyMobile());
         }
     }
-    
+
     /**
      * generate a verification code for given user
      *
@@ -56,11 +58,28 @@ trait MustVerifyMobileNumberTrait
      */
     public function setMobileVerificationCode(): bool
     {
-        $verificationCode = random_int(10000, 99999);
+        Log::info('before event');
+        event(new MobileVerificationCodeGenerated($this , Carbon::now('Asia/Tehran')));
+        return true;
 
-        return $this->forceFill([
+
+        $verificationCode = $this->getMobileVerificationCode();
+        if(isset($verificationCode)) {
+            return true;
+        }
+
+
+        $verificationCode = random_int(10000, 99999);
+        $result = $this->forceFill([
             'mobile_verified_code' => $verificationCode,
         ])->save();
+
+        if($result){
+            event(new MobileVerificationCodeGenerated($this , Carbon::now('Asia/Tehran')));
+
+            return true;
+        }
+        return false;
     }
 
     /**
