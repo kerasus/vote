@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\MobileVerified;
+use App\Traits\VerifiesMobiles;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SubmitVerificationCode;
-use App\User;
-use Illuminate\Http\{Request, Response};
-use Illuminate\Support\Facades\Redirect;
 
 class MobileVerificationController extends Controller
 {
+    use VerifiesMobiles;
+    protected $redirectTo = '/';
     /*
     |--------------------------------------------------------------------------
     | Mobile Verification Controller
@@ -21,8 +19,6 @@ class MobileVerificationController extends Controller
     | be re-sent if the user didn't receive the original email message.
     |
     */
-
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -30,77 +26,5 @@ class MobileVerificationController extends Controller
             ->only('resend');
         $this->middleware('throttle:10,1')
             ->only('verify');
-    }
-
-    /**
-     * Show the mobile verification notice.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request)
-    {
-        return $request->user()
-            ->hasVerifiedMobile() ? back() : view('auth.verify');
-    }
-
-    /**
-     * Mark the authenticated user's mobile number as verified.
-     *
-     * @param  SubmitVerificationCode  $request
-     * @param                          $code
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function verify(SubmitVerificationCode $request)
-    {
-        $user     = $request->user();
-        $verified = false;
-        if ($request->code == $user->getMobileVerificationCode() && $user->markMobileAsVerified()) {
-            event(new MobileVerified($user));
-            $verified = true;
-        }
-
-        if ($verified) {
-            return response()->json([
-                'user'    => $user,
-                'message' => __('messages.mobile_is_verified'),
-            ]);
-        }
-    
-        if($request->expectsJson() ){
-            return response()->json([
-                    'errors' => [
-                        'code' => [
-                            __('messages.code_is_wrong')
-                        ]
-                    ]
-                ],Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-        Redirect::route('verification.mobile.notice');
-    }
-
-    /**
-     * Resend the mobile verification notification.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function resend(Request $request)
-    {
-        /** @var User $user */
-        $user = $request->user();
-        if ($user->hasVerifiedMobile()) {
-            return $request->expectsJson() ? abort(Response::HTTP_FORBIDDEN,
-                __('messages.mobile_is_verified')) : route('web.home');
-        }
-
-        $user->sendMobileVerificationNotification();
-
-        return response()->json([
-            'message' => __('messages.code_is_sent'),
-        ]);
     }
 }

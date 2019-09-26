@@ -54,12 +54,14 @@
                 form : new Form({
                    code: ''
                 }),
-                leftTime: 60000
             }
         },
         computed: {
             timerIsGoing() {
                 return !this.timerStopped;
+            },
+            leftTime(){
+                return 180000;
             }
         },
         mounted() {
