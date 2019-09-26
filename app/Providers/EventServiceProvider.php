@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\CountOption;
+use App\Events\MobileVerificationCodeGenerated;
 use App\Events\MobileVerified;
 use App\Listeners\CountOptionListener;
+use App\Listeners\MobileVerificationCodeGeneratedListener;
 use App\Listeners\MobileVerifiedListener;
 use App\Listeners\SendMobileVerificationNotification;
 use Illuminate\Auth\Events\Registered;
@@ -28,8 +30,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         CountOption::class => [
             CountOptionListener::class
+        ],
+        MobileVerificationCodeGenerated::class => [
+            MobileVerificationCodeGeneratedListener::class
         ]
-
     ];
 
     /**

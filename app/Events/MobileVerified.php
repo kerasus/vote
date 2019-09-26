@@ -3,11 +3,12 @@
 namespace App\Events;
 
 use App\Classes\Verification\MustVerifyMobileNumber;
+use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 class MobileVerified
 {
-    use SerializesModels;
+    use Dispatchable, SerializesModels;
 
     /**
      * The verified user.
