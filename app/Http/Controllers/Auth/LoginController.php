@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\Authenticated;
 use App\Http\Controllers\Api\IndexPageController;
 use App\Http\Controllers\Controller;
 use App\Traits\RedirectTrait;
@@ -157,6 +158,7 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+        event(new Authenticated($user));
         if (!$request->expectsJson()) {
             return redirect($this->redirectTo($request));
         }

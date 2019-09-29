@@ -56,7 +56,7 @@ class VerifyMobile extends Notification implements ShouldQueue
 
     private function msg(): string
     {
-        $messageCore = "کد تایید شماره موبایل شما :"."\n".$this->user->getMobileVerificationCode()."\n";
+        $messageCore = 'کد تایید شماره موبایل شما :'."\n".$this->user->getMobileVerificationCode()."\n";
         $message     = $messageCore;
 
         return $message;
@@ -74,7 +74,7 @@ class VerifyMobile extends Notification implements ShouldQueue
     /**
      * @return mixed
      */
-    private function getUserFullName():string
+    private function getUserFullName():?string
     {
         $userFullName = optional($this->user)->full_name;
         return (isset($userFullName))?$userFullName:'کاربر' ;

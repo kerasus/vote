@@ -21,9 +21,9 @@ trait MustVerifyMobileNumberTrait
      *
      * @return bool
      */
-    public function hasVerifiedMobile()
+    public function hasVerifiedMobile(): bool
     {
-        return ! is_null($this->mobile_verified_at);
+        return $this->mobile_verified_at !== null;
     }
 
     /**
@@ -31,22 +31,23 @@ trait MustVerifyMobileNumberTrait
      *
      * @return bool
      */
-    public function markMobileAsVerified()
+    public function markMobileAsVerified(): bool
     {
         return $this->forceFill([
             'mobile_verified_at' => $this->freshTimestamp(),
         ])->save();
     }
-
+    
     /**
      * Send the mobile verification notification.
      *
      * @return void
+     * @throws \Exception
      */
-    public function sendMobileVerificationNotification()
+    public function sendMobileVerificationNotification(): void
     {
         if ($this->setMobileVerificationCode()) {
-//            $this->notify(new VerifyMobile());
+            $this->notify(new VerifyMobile());
         }
     }
 
@@ -58,17 +59,11 @@ trait MustVerifyMobileNumberTrait
      */
     public function setMobileVerificationCode(): bool
     {
-        Log::info('before event');
-        event(new MobileVerificationCodeGenerated($this , Carbon::now('Asia/Tehran')));
-        return true;
-
-
         $verificationCode = $this->getMobileVerificationCode();
         if(isset($verificationCode)) {
             return true;
         }
-
-
+        
         $verificationCode = random_int(10000, 99999);
         $result = $this->forceFill([
             'mobile_verified_code' => $verificationCode,
@@ -76,7 +71,6 @@ trait MustVerifyMobileNumberTrait
 
         if($result){
             event(new MobileVerificationCodeGenerated($this , Carbon::now('Asia/Tehran')));
-
             return true;
         }
         return false;
@@ -87,7 +81,7 @@ trait MustVerifyMobileNumberTrait
      *
      * @return void
      */
-    public function sendMobileVerifiedNotification()
+    public function sendMobileVerifiedNotification(): void
     {
         $this->notify(new MobileVerified());
     }
@@ -95,9 +89,9 @@ trait MustVerifyMobileNumberTrait
     /**
      * get user's verification code
      *
-     * @return string
+     * @return string|null
      */
-    public function getMobileVerificationCode()
+    public function getMobileVerificationCode(): ?string
     {
         return $this->mobile_verified_code;
     }
