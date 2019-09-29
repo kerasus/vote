@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\CountOption;
+use App\Events\Authenticated;
 use App\Events\MobileVerificationCodeGenerated;
 use App\Events\MobileVerified;
 use App\Listeners\CountOptionListener;
@@ -33,6 +34,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         MobileVerificationCodeGenerated::class => [
             MobileVerificationCodeGeneratedListener::class
+        ],
+        Authenticated::class => [
+            SendMobileVerificationNotification::class,
         ]
     ];
 

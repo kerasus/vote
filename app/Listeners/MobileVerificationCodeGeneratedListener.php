@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Carbon\Carbon;
 use App\Events\MobileVerificationCodeGenerated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
@@ -18,9 +19,7 @@ class MobileVerificationCodeGeneratedListener
      */
     public function handle(MobileVerificationCodeGenerated $event)
     {
-        $timeStamp = $event->generationTime;
-        $user = $event->user;
-//        Carbon::createFromTimestamp($timeStamp);
-        Log::info('MobileVerificationCodeGeneratedListener : '.$user->id.' - '.$timeStamp);
+//        $timeStamp = Carbon::createFromTimestamp($event->generationTime);
+//        $user = $event->user;
     }
 }
