@@ -36,6 +36,7 @@ class UserVoteOptionContoller extends Controller
      */
     public function store(InsertUserVoteRequest $request)
     {
+        
         $option = Option::Find($request->input('option_id'));
         if(!isset($option)){
             return response()->json($this->setErrorResponse(myResponse::OPTION_NOT_EXISTS, __('The given data was invalid.'),
