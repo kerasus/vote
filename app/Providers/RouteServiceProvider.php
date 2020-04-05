@@ -80,15 +80,8 @@ class RouteServiceProvider extends ServiceProvider
     private function modelBinding()
     {
         Route::bind('UserVoteOption', function ($value) {
-            $key = 'userVoteOption:'.$value;
-
-            return Cache::tags([
-                'userVoteOption',
-                $key,
-            ])->remember($key, config('cache_durations.CACHE_5'), function () use ($value) {
-                    return UserVoteOption::where('id', $value)
-                            ->first() ?? abort(404);
-                });
+            return UserVoteOption::where('id', $value)
+                    ->first() ?? abort(404);
         });
     }
 }

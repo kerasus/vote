@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\EnsureMobileIsVerified;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\TrustProxies;
@@ -17,6 +18,7 @@ use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
+use App\Http\Middleware\ModifyRequestInputMiddleware;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
@@ -56,7 +58,7 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
-            
+
             CreateFreshApiToken::class,
         ],
 
@@ -83,6 +85,8 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
+        'convert'                                   => ModifyRequestInputMiddleware::class,
+        'mobile.verified' => EnsureMobileIsVerified::class,
     ];
 
     /**

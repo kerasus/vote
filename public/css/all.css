@@ -113,6 +113,10 @@ h2.v--title {
     color: rgb(148, 152, 161);
 }
 
+.v--input-hint.v--danger {
+    color: rgb(255, 0, 136);
+}
+
 .v--margin-right-5 {
     margin-right: 5px;
 }
@@ -181,7 +185,7 @@ h2.v--title {
 .v--vote-item {
     position: relative;
     padding: 0 5px;
-    min-width: 265px;
+    min-width: 270px;
     display: table-cell;
 }
 .v--vote-item .v--vote-item-title {
@@ -190,9 +194,10 @@ h2.v--title {
     padding-right: 5px;
 }
 .v--vote-item .v--vote-item-countOfTotalVote {
-    color: rgb(114, 163, 147);
+    color: black;
     float: left;
     padding-left: 5px;
+    font-weight: bold;
 }
 
 .v--vote-item .v--vote-item-choices {
@@ -237,6 +242,7 @@ h2.v--title {
     border-bottom-left-radius: 10px;
 }
 
+
 .v--vote-item .v--vote-item-choices .v--vote-item-choice.selected {
     background-color: #0ac37f;
     color: white;
@@ -244,6 +250,8 @@ h2.v--title {
 
 .v--vote-item .v--vote-item-choices .v--vote-item-choice .v--vote-item-choice-count {
     margin-right: 5px;
+    color: red;
+    font-weight: 500;
 }
 
 
@@ -280,8 +288,10 @@ h2.v--title {
         padding: 10px 0px;
     }
 
-    .v--vote-item .v--vote-item-title,
+    /*.v--vote-item .v--vote-item-title,
     .v--vote-item .v--vote-item-countOfTotalVote {
         float: none;
-    }
+    }*/
 }
+
+

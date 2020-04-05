@@ -1,28 +1,25 @@
 @extends('layouts.app')
 
+@section('page-css')
+    <style>
+        .v--login-page {
+            margin-top: 5%;
+        }
+        .v--login-page-info {
+            margin-top: -20px;
+        }
+    </style>
+    
+@endsection
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
 
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-		                <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-	                </form>
-                </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-11 col-sm-10 col-md-8 col-lg-4 mx-auto v--login-page">
+                @include('auth.partials.verify')
             </div>
         </div>
     </div>
-</div>
+
 @endsection

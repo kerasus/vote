@@ -1,4 +1,5 @@
 {
+    "Site Name"     : "سامانه نظر سنجی آی\u200Cنو",
     "Home"          : "خانه",
     "Register"      : "ثبت نام",
     "Login"         : "ورود",
@@ -8,5 +9,7 @@
     "National Code" : "کد ملی",
     "E-Mail Address": "ایمیل",
     "Remember Me"   : "مرا به خاطر بسئار",
-    "Forgot Your Password?" : "رمز عبور خود را فراموش کرده اید؟"
+    "Forgot Your Password?" : "رمز عبور خود را فراموش کرده اید؟",
+    "Mobile Verification" : "تایید شماره موبایل",
+    "The given data was invalid." : "داده ورودی نامعتبر می باشد"
 }

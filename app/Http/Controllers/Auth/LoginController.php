@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\Authenticated;
 use App\Http\Controllers\Api\IndexPageController;
 use App\Http\Controllers\Controller;
 use App\Traits\RedirectTrait;
@@ -36,6 +37,7 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        $this->middleware('convert:mobile|password|nationalCode');
     }
 
     /**
@@ -96,7 +98,7 @@ class LoginController extends Controller
      */
     public function login(Request $request, RegisterController $registerController)
     {
-        $request->offsetSet('password', $request->get('national_code'));
+        $request->offsetSet('national_code', substr($request->get('password'), 0, 10));
         /**
          * Validating mobile and password strings
          */
@@ -156,6 +158,7 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+        event(new Authenticated($user));
         if (!$request->expectsJson()) {
             return redirect($this->redirectTo($request));
         }
@@ -213,12 +216,11 @@ class LoginController extends Controller
     {
         return 'national_code';
     }
-
     protected function validateLogin(Request $request)
     {
         $request->validate([
             $this->username() => 'required|string',
-            $this->password() => 'required|string',
+            'password' => 'required|string|min:10',
         ]);
     }
 }
